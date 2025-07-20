@@ -1,0 +1,3 @@
+#foreach($i in $items)
+<title>$i</title>
+#end

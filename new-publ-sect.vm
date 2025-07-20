@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Новая секция &#x2014; LUWRAIN Social!</title>
+#parse("inc-head-links.vm")
+  </head>
+  <body>
+    <div class="container_nbs">
+#parse("inc-header-login.vm")
+      <main style="max-width: 60rem; min-width: 50rem; margin: 0 auto;">
+        <ul>
+#foreach($item in $ITEMS)
+          <li><a href="/publication/section/insert/_handle/?publ=$item.publ&amp;pos=$item.pos&amp;type=$item.type&amp;templ=$item.template" title="$item.title">$item.name</a></li>
+#end
+        </ul>
+      </main>
+#parse("inc-footer.vm")
+    </div>
+  </body>
+</html>

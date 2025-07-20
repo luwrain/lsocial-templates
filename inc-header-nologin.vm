@@ -1,0 +1,28 @@
+<header class="header shadow-sm mb-3">
+  <div class="container-fluid d-flex justify-content-between align-items-center py-2">
+    
+    <!-- Левая часть: логотип + переход на главную -->
+    <div class="d-flex align-items-center">
+      <a href="/" class="d-flex align-items-center text-decoration-none">
+        <img src="/decoration/logo.png" alt="Логотип" style="height: 30px;" class="me-2">
+        <span class="fw-bold text-secondary">LUWRAIN SOCIAL</span>
+      </a>
+      <a class="aButton" style="background: transparent;" href="/features/" title="Какие полезные возможности предлагает LUWRAIN Social?">Что это?</a>
+      <a class="aButton" style="background: transparent;" href="https://t.me/LUWRAINru" title="Наш канал в Телеграм">Новости</a>
+      <a class="aButton" style="background: transparent;" href="/rules" title="Правила использования, обработка персональных данных и отказ от ответственности">Правила</a>  
+    </div>
+
+    <!-- Правая часть: дропдаун -->
+    <div class="dropdown">
+      <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+        Меню
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+        <li><a class="dropdown-item" href="/create/">Создать материал</a></li>
+        <li><a class="dropdown-item" href="/profile/">Профиль: $user.name</a></li>
+        <li><a class="dropdown-item" href="/logout/">Выйти</a></li>
+      </ul>
+    </div>
+
+  </div>
+</header>

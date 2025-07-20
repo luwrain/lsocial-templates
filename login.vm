@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="keywords" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Вход &#x2014; LUWRAIN Social</title>
+    <link rel="stylesheet" href="https://marigostra.ru/persist/bootstrap/5.2.3/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link media="all" rel="stylesheet" type="text/css" href="/main.css">
+  </head>
+  <body>
+    <div class="container_nbs">
+      <header class="header">
+        <nav class="navbar">
+          <div class="nav-item">
+            <div onclick = "document.location = '/';" id = "logo"><img src="/decoration/logo.png" alt="Логотип"><span style="color: #606060;">LUWRAIN</span> SOCIAL</div> <!-- logo -->
+          </div> <!-- nav-item -->
+        </nav>
+        <div class="nav-item">
+          <a class="aButton" style="background: transparent;" href="/features/" title="Какие полезные возможности предлагает LUWRAIN Social?">Что это?</a>
+          <a class="aButton" style="background: transparent;" href="https://t.me/LUWRAINru" title="Наш канал в Телеграм">Новости</a>
+          <a class="aButton" style="background: transparent;" href="/rules" title="Правила использования, обработка персональных данных и отказ от ответственности">Правила</a>
+        </div> <!-- nav-item -->
+      </header>
+      <main style="background: transparent; box-shadow: none;">
+       <div class="login__box">
+      <form action="/login/" method="post" enctype="application/x-www-form-urlencoded">
+          <h3>Вход</h3>
+          <div class="input-group">
+            <input type="text" name="nickname" id="nickname" value="" maxlength="30" placeholder="" required>
+            <label for="nickname"><b>Имя пользователя </b></label>
+          </div>
+          <div class="input-group">
+            <input type="password" name="passwd" id="passwd" value="" maxlength="30" required style="letter-spacing: 0.2rem;">
+            <label for="passwd"><b>Пароль </b></label>
+          </div>
+          <input type="hidden" name="redirect" value="/">
+            <button class="aButton" style="width: 13rem;" type="submit">Войти</button>
+      </form>
+        </div>
+      </main>
+      <footer>
+        <div class="row" id="footerPart">
+          <div class="col-4"><span class="font14">&#169; 2024 Михаил&#160;Пожидаев, проект&#160;LUWRAIN</span></div>
+          <div class="col-4"><a class="blueColor" href="/contacts/" title="Написать нам по любым вопросам">Контакты</a> | <a class="blueColor" href="/rules/" title="Правила использования, обработка персональных данных и отказ от ответственности">Правила использования</a></div>
+          <div class="col-4">При поддержке <a href="https://opensource.yandex"><span class="blueColor">Yandex Open Source</span></a></div>
+        </div> <!-- row -->
+      </footer>
+    </div>
+  </body>
+</html>

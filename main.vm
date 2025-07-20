@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>LUWRAIN Social приветствует вас!</title>
+#parse("inc-head-links.vm")
+  </head>
+  <body>
+    <div class="container_nbs">
+#parse("inc-header-login.vm")
+      <main class="py-4 px-3" style="grid-area: content;">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+          
+          #foreach($item in $items)
+          <div class="col">
+            <div class="card h-100 shadow-sm">
+              <div class="card-body">
+                <h6 class="text-muted">$item.type</h6>
+                <h5 class="card-title">
+                  <a href="$item.link">$item.name</a>
+                </h5>
+                <p class="card-text"><strong>Короткая ссылка:</strong> $item.link</p>
+                <p class="card-text"><strong>Теги:</strong> #foreach($tag in $item.tags)$tag#if($foreach.hasNext), #end#end</p>
+                <p class="card-text"><strong>Предмет:</strong> $item.subject</p>
+              </div>
+              <div class="card-footer text-muted text-end">
+                Обновлено: $item.updated
+              </div>
+            </div>
+          </div>
+          #end
+
+        </div>
+      </main>
+      #parse("inc-footer.vm")
+    </div>
+  </body>
+</html>

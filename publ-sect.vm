@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>Редактирование секции работы &#x2014; LUWRAIN Social</title>
+#parse("inc-head-links.vm")
+  </head>
+  <body>
+    <div class="container_nbs">
+#parse("inc-header-login.vm")
+      <main style="max-width: 60rem; min-width: 50rem; margin: 0 auto;">
+        <h1>$NAME</h1>
+        <form action="/publication/section/edit/_handle/" method="post" enctype="application/x-www-form-urlencoded">
+          <input type="hidden" name="publ" value="$PUBL">
+          <input type="hidden" name="sect" value="$SECT">
+          <textarea name="source" id="source" cols=100" rows=20" maxlength="$LIMIT_SOURCE_LEN"></textarea>
+          <button class="aButton" style="width: 13rem;" type="submit">Сохранить</button>
+        </form>
+      </main>
+#parse("inc-footer.vm")
+    </div>
+  </body>
+</html>

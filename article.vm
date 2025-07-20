@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8">
+    <title>$TITLE &#x2014; LUWRAIN Social</title>
+#parse("inc-head-links.vm")
+  </head>
+  <body>
+    <div class="container_nbs">
+#parse("inc-header-nologin.vm")
+      <main style="max-width: 60rem; min-width: 50rem; margin: 0 auto;">
+$CONTENT
+      </main>
+#parse("inc-footer.vm")
+    </div>
+  </body>
+</html>
