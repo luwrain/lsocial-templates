@@ -1,26 +1,50 @@
-<header class="header shadow-sm mb-3">
-  <div class="container-fluid d-flex justify-content-between align-items-center py-2">
+<header class="header navbar navbar-expand-lg shadow-sm mb-3">
+  <div class="container-fluid">
+    <!-- Логотип -->
+    <a href="/" class="navbar-brand d-flex align-items-center">
+      <img src="/decoration/logo.png" alt="Логотип" class="me-2" style="height: 30px;">
+      <span class="fw-bold text-secondary d-none d-sm-inline">LUWRAIN SOCIAL</span>
+    </a>
     
-    <!-- Левая часть: логотип + переход на главную -->
-    <div class="d-flex align-items-center">
-      <a href="/" class="d-flex align-items-center text-decoration-none">
-        <img src="/decoration/logo.png" alt="Логотип" style="height: 30px;" class="me-2">
-        <span class="fw-bold text-secondary">LUWRAIN SOCIAL</span>
-      </a>
-    </div>
-
-    <!-- Правая часть: дропдаун -->
-    <div class="dropdown">
-      <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-        Меню
-      </button>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
-        <li><a class="dropdown-item" href="/create/">Создать материал</a></li>
-        <li><a class="dropdown-item" href="/profile/">Профиль: $user.name</a></li>
-        <li><a class="dropdown-item" href="/logout/">Выйти</a></li>
+    <!-- Кнопка бургер-меню -->
+    <button class="navbar-toggler custom-toggler" type="button" data-bs-toggle="collapse" 
+            data-bs-target="#navbarContent" aria-controls="navbarContent" 
+            aria-expanded="false" aria-label="Переключить навигацию">
+      <svg class="burger-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5 12H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M5 17H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+        <path d="M5 7H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+      </svg>
+    </button>
+    
+    <!-- Основное содержимое хедера -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Десктопное меню пользователя (скрывается на мобильных) -->
+      <div class="dropdown d-none d-lg-block">
+        <button class="aButton dropdown-toggle d-flex align-items-center" type="button" 
+                id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+          <span class="text-truncate" style="max-width: 120px;">$user.name</span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+          <li><a class="dropdown-item" href="/create/">Создать материал</a></li>
+          <li><a class="dropdown-item" href="/profile/">Профиль</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item text-danger" href="/logout/">Выйти</a></li>
+        </ul>
+      </div>
+      
+      <!-- Мобильное меню пользователя (показывается только в бургер-меню) -->
+      <ul class="navbar-nav d-lg-none">
+        <li class="nav-item">
+          <a class="nav-link" href="/create/">Создать материал</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/profile/">Профиль</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="/logout/">Выйти</a>
+        </li>
       </ul>
     </div>
-
   </div>
 </header>
-
