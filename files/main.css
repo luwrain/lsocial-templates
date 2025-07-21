@@ -249,7 +249,7 @@ header {
 
 .header {
     grid-area: header;
-    padding: 1.5rem 10%;
+    padding: 2rem 10%;
     margin: 0 0 10px 0;
     background-color: var(--background-400);
 
@@ -417,7 +417,8 @@ td, th { vertical-align: top; }
 
 .aButton:hover {
     background: var(--primary-300);
-    color: var(--text-700);
+    color: var(--text-800);
+    transform: scale(1.05);
 }
 
 .aButton:active {
@@ -437,13 +438,6 @@ nav {
 aside {
     grid-area: sidebar;
     padding: 2rem;
-}
-
-
-.navbar ul li{
-    display: inline-block;
-    line-height: 10px;
-    margin-top: 1rem;
 }
 
 .navbar a {
@@ -473,7 +467,7 @@ aside {
 
 
 
-@media (max-width: 1200px) {
+@media (max-width: 992px) {
     .container_nbs {
         min-height: 100dvh;
         grid-template-columns: 1fr;
@@ -484,6 +478,19 @@ aside {
             "content"
             "sidebar"
             "footer";
+    }
+
+        .navbar-nav {
+        margin-top: 1rem;
+    }
+    
+    .nav-link {
+        margin: 0.25rem 0;
+    }
+    
+    .dropdown {
+        margin-top: 1rem;
+        margin-bottom: 0.5rem;
     }
 }
 
@@ -502,7 +509,7 @@ footer {
     box-shadow: 0px 5px 15px var(--box-shadow);
     margin-top: 1%;
     border-radius: 10px;
-  }
+}
 
 .image-slider { font-size: 20px; position: relative; }
 .image-slider .image-item { display: block; padding: 0px 40px; }
@@ -512,43 +519,29 @@ footer {
 .image-slider .photo-next { right: 0; }
 .image-slider .photo-prev { left: 0; }
 
-/* Dropdown Button */
-.dropbtn {
-    background-color: var(--background-200);
-    color: var(--text-800);
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    transition: all 0.3s ease 0s;
-}
-
 .dropdown {
-    position: relative;
     display: inline-block;
-    background-color: var(--background-200);
-    color: var(--text-800);
-    font-size: 16px;
-    border-radius: 8px;
+    margin-left: auto; 
+    margin-right: 1rem; 
 }
 
 .input-group {
-  margin: 20px 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
 .input-group label {
-  position: absolute;
-  transform: translateY(-50%);
-  top: 50%;
-  font-size: 16px;
-  pointer-events: none;
-  color: var(--accent-800);
-  padding: 0 5px;
-  transition: .5s;
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
+    font-size: 16px;
+    pointer-events: none;
+    color: var(--accent-800);
+    padding: 0 5px;
+    transition: .5s;
 }
 
 input {
@@ -557,21 +550,21 @@ input {
 
 
 .input-group>input {
-  width: 20rem;
-  height: 4rem;
-  position: relative;
-  color: var(--text-800);
-  font-size: 16px;
-  padding: 0 15px;
-  border: 0.1rem solid var(--accent-800);
-  background: transparent;
-  outline: none;
+    width: 20rem;
+    height: 4rem;
+    position: relative;
+    color: var(--text-800);
+    font-size: 16px;
+    padding: 0 15px;
+    border: 0.1rem solid var(--accent-800);
+    background: transparent;
+    outline: none;
 }
 
 .input-group>input:focus~label,
 .input-group>input:valid~label {
-  top: 0.7rem;
-  font-size: 14px;
+    top: 0.7rem;
+    font-size: 14px;
 
 }
 
@@ -612,21 +605,223 @@ textarea {
     padding: 1rem;
 }
 
+
+
+/* Дополнительные стили для карточек */
+.card-article {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    min-height: 280px;
+}
+
+.card-article:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-title a {
+    color: var(--text-900);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.card-title a:hover {
+    color: var(--primary-600);
+    text-decoration: underline;
+}
+
+.card-meta {
+    font-size: 0.85rem;
+    color: var(--text-600);
+}
+
+.card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.tag {
+    background-color: var(--primary-100);
+    color: var(--primary-700);
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+
+.card-footer {
+    background-color: var(--background-50);
+    border-top: 1px solid var(--primary-100);
+    font-size: 0.8rem;
+}
+
+.link-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding-right: 70px;
+    min-height: 24px;
+}
+
+.link-copy {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex-grow: 1;
+    padding-right: 70px;
+    margin-right: -70px;
+}
+
+.copy-hint {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--primary-500);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+}
+
+.link-container:hover .copy-hint {
+    opacity: 1;
+}
+
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 3rem;
+    color: var(--text-500);
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--background-400);
+    box-shadow: 0px 5px 5px -5px var(--box-shadow);
+    padding: 0.5rem 0;
+}
+
 .navbar .aButton {
     color: var(--text-700);
 }
 .navbar .aButton:hover {
     color: var(--text-800);
-    font-size: 1.25rem;
+    transform: scale(1.1);
     text-shadow: -2px 11px 8px var(--box-shadow);   
 }
 
-.card-title a {
-    text-decoration: none;
+.navbar .dropdown .aButton {
+    color: var(--text-700);
+    background: var(--primary-400);
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar .dropdown .aButton:hover {
+    color: var(--text-800);
+    transform: scale(1.1);
+    text-shadow: -2px 11px 8px var(--box-shadow);
+    background: var(--primary-300);
+    
+}
+.custom-toggler {
+    border: none;
+    padding: 0.5rem;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.custom-toggler:focus {
+    box-shadow: 0 0 0 2px var(--primary-300);
+    outline: none;
+}
+
+.burger-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--text-100); 
+    transition: transform 0.3s ease;
+}
+
+/* Стили для мобильного меню */
+.navbar-nav.d-lg-none {
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.navbar-nav.d-lg-none .nav-item {
+    border-bottom: 1px solid var(--primary-200);
+    border-top: 1px solid var(--primary-200);
+}
+
+.navbar-nav.d-lg-none .nav-link {
+    padding: 0.75rem 1rem;
+    color: var(--text-700);
+}
+
+.navbar-nav.d-lg-none .nav-link:hover {
+    background-color: var(--primary-100);
+}
+
+/* Анимация при открытии меню */
+.custom-toggler[aria-expanded="true"] .burger-icon {
+    transform: rotate(90deg);
+}
+
+/* Убираем стандартную иконку Bootstrap */
+.navbar-toggler-icon {
+    display: none;
+}
+
+.navbar-collapse {
+    transition: all 0.3s ease;
+}
+
+.nav-link {
+    white-space: nowrap;
+    padding: 0.5rem 1rem !important;
+    margin: 0 0.25rem;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5em;
+    vertical-align: 0.15em;
+}
+
+.dropdown-menu {
+    border: none;
+    box-shadow: 0 5px 15px var(--box-shadow);
+    border-radius: 8px;
+    padding: 0.5rem;
+    background-color: var(--background-100);
+}
+
+.dropdown-item {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    color: var(--text-700);
+    transition: all 0.2s ease;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: var(--primary-100);
     color: var(--text-900);
 }
 
-.card-title a:hover {
-    text-decoration: underline;
-    color: var(--accent);
+.dropdown-divider {
+    border-color: var(--primary-300);
+    margin: 0.5rem 0;
 }
