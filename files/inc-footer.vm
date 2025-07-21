@@ -4,14 +4,14 @@
       <span class="font14">&#169; 2024 Михаил&#160;Пожидаев, проект&#160;LUWRAIN</span>
     </div>
     <div class="col-4">
-      <a class="blueColor" href="/contacts/" title="Написать нам по любым вопросам">Контакты</a>
+      <a href="/contacts/" title="Написать нам по любым вопросам">Контакты</a>
       |
-      <a class="blueColor" href="/rules/" title="Правила использования, обработка персональных данных и отказ от ответственности">Правила использования</a>
+      <a href="/rules/" title="Правила использования, обработка персональных данных и отказ от ответственности">Правила использования</a>
     </div>
     <div class="col-4">
       При поддержке
       <a href="https://opensource.yandex">
-        <span class="blueColor">Yandex Open Source</span>
+        Yandex Open Source
       </a>
     </div>
   </div>

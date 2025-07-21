@@ -1,95 +1,6 @@
 /* Import fonts and colors */
 @import url('https://fonts.googleapis.com/css2?family=Commissioner:wght@700&family=IBM+Plex+Sans&display=swap');
 
-body {
-    font-family: IBM Plex Sans Thai, sans-serif;
-    font-weight: 400;
-    height: 100%;
-}
-
-h1, h2, h3, h4, h5 {
-    font-family: Commissioner, sans-serif;
-    font-weight: 700;
-}
-
-html {font-size: 100%; height: 100%;} /* 16px */
-
-h1 {font-size: 4.210rem; /* 67.36px */}
-
-h2 {font-size: 3.158rem; /* 50.56px */}
-
-h3 {font-size: 2.369rem; /* 37.92px */}
-
-h4 {font-size: 1.777rem; /* 28.48px */}
-
-h5 {font-size: 1.333rem; /* 21.28px */}
-
-small {font-size: 0.750rem; /* 12px */}
-
-@media (prefers-color-scheme: light) {
-    :root {
-      --text-50: #eef6f6;
-      --text-100: #ddeeee;
-      --text-200: #bbdddd;
-      --text-300: #99cccc;
-      --text-400: #77bbbb;
-      --text-500: #55aaaa;
-      --text-600: #448888;
-      --text-700: #336666;
-      --text-800: #224444;
-      --text-900: #112222;
-      --text-950: #091111;
-  
-      --background-50: #eef6f6;
-      --background-100: #ddeeee;
-      --background-200: #bbdddd;
-      --background-300: #99cccc;
-      --background-400: #77bbbb;
-      --background-500: #55aaaa;
-      --background-600: #448888;
-      --background-700: #336666;
-      --background-800: #224444;
-      --background-900: #112222;
-      --background-950: #091111;
-  
-      --primary-50: #eef7f6;
-      --primary-100: #ddeeec;
-      --primary-200: #bbddda;
-      --primary-300: #98cdc7;
-      --primary-400: #76bcb5;
-      --primary-500: #54aba2;
-      --primary-600: #438982;
-      --primary-700: #326761;
-      --primary-800: #224441;
-      --primary-900: #112220;
-      --primary-950: #081110;
-  
-      --secondary-50: #eef1f6;
-      --secondary-100: #dde4ee;
-      --secondary-200: #bbc8dd;
-      --secondary-300: #99adcc;
-      --secondary-400: #7791bb;
-      --secondary-500: #5576aa;
-      --secondary-600: #445e88;
-      --secondary-700: #334766;
-      --secondary-800: #222f44;
-      --secondary-900: #111822;
-      --secondary-950: #090c11;
-  
-      --accent-50: #eef0f6;
-      --accent-100: #dde1ee;
-      --accent-200: #bbc4dd;
-      --accent-300: #99a6cc;
-      --accent-400: #7788bb;
-      --accent-500: #556aaa;
-      --accent-600: #445588;
-      --accent-700: #334066;
-      --accent-800: #222b44;
-      --accent-900: #111522;
-      --accent-950: #090b11;
-  
-    }
-}
 @media (prefers-color-scheme: dark) {
     :root {
         --text-50: #091111;
@@ -231,33 +142,44 @@ small {font-size: 0.750rem; /* 12px */}
     color: var(--text-950);
 }
 
-body { 
+html {
+    font-size: 100%; 
+    height: 100%;
+}
+
+body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 400;
+    height: 100%;
     background-color: var(--background-100);
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
 }
 
-header {
-    padding: 2rem 10%;
-    margin: 0 0 10px 0;
-
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+/* Typography */
+h1, h2, h3, h4, h5 {
+    font-family: 'Commissioner', sans-serif;
+    font-weight: 700;
+    margin-bottom: 1rem;
 }
+
+h1 { font-size: 4.210rem; }
+h2 { font-size: 3.158rem; }
+h3 { font-size: 2.369rem; }
+h4 { font-size: 1.777rem; }
+h5 { font-size: 1.333rem; }
+small { font-size: 0.750rem; }
 
 .header {
     grid-area: header;
     padding: 2rem 10%;
-    margin: 0 0 10px 0;
     background-color: var(--background-400);
-
+    box-shadow: 0px 5px 5px -5px var(--box-shadow);
+    border-radius: 0 0 10px 10px;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    box-shadow: 0px 5px 5px -5px var(--box-shadow);
-    border-radius: 0 0 10px 10px;
 }
 
 button { cursor: pointer; }
@@ -348,26 +270,6 @@ main {
 }
 
 
-.main__login {
-    width: 650px;
-    height: 30rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0 auto;
-    background: none;
-    box-shadow: none;
-}
-
-.main__sections {
-    background-color: transparent; 
-    box-shadow: none; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    flex-direction: column;
-}
-
 td, th { vertical-align: top; }
 
 .container_nbs {
@@ -382,24 +284,11 @@ td, th { vertical-align: top; }
     
 }
 
-
-.article { color: #303030; font-size: 16px; font-weight: normal; text-decoration: none; padding-top: 10px; }
-.article a { color: #0060ff; font-weight: normal; }
-.article a:hover { color: #0060ff; font-weight: normal; text-decoration: underline; }
-.article h1 { color: #000000; font-size: 20px; font-weight: normal; text-align: center; }
-.article h2 { color: #000000; font-size: 18px; }
-.article h3 { color: #0060ff!important; font-size: 16px; }
-.article ul { padding-left: 20px; padding-top: 5px; }
-.article code { color: #303030; background-color: white; }
-.article a code {color: #0060ff; background-color: white; }
-.article a:hover code { color: #0060ff; background-color: white; text-decoration: underline; }
-
-
 #logo { text-align: left; cursor: pointer; font-family: Arial; font-size: 18px; font-weight: bold; color: black; }
 
 .aButton{
     display: inline-block;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: 'Trebuchet MS', sans-serif;
     font-weight: 600;
     font-size: 1.125rem;
     text-align: center;
@@ -410,9 +299,8 @@ td, th { vertical-align: top; }
     max-width: 12rem;
     border-radius: 1rem;
     padding: 0.75rem 1.5rem;
-    transition: all 0.2s ease 0s;
+    transition: all 0.2s ease;
     margin: 1px 0;
-    font-style: normal;
 }
 
 .aButton:hover {
@@ -426,7 +314,7 @@ td, th { vertical-align: top; }
 }
 
 .aButton:focus {
-    outline: 2px solid var(--accent-800);
+    outline: 1px solid var(--accent-800);
     outline-offset: 2px;
 }
 
@@ -445,28 +333,6 @@ aside {
     box-shadow: none;
 }
 
-
-.hidden-not-important { display: none; }
-.clearBoth { clear: both!important; }
-.right { float: right!important; }
-.left { float: left!important; }
-.bold { font-weight: bold!important; }
-.font14 { font-size: 14px!important; }
-.font16 { font-size: 16px!important; }
-.font18 { font-size: 18px!important; }
-.font20 { font-size: 20px!important; }
-.font30 { font-size: 30px!important; }
-.font35 { font-size: 35px!important; }
-.font40 { font-size: 40px!important; }
-.italic { font-style: italic!important; }
-.blueColor { color: #0060ff!important; }
-.lightBlueColor { color: #00bed5!important; }
-.lightGrey { color: #c0c0c0!important; }
-.darkGrey { color: #303030!important; }
-.arial { font-family: Arial Unicode MS; }
-
-
-
 @media (max-width: 992px) {
     .container_nbs {
         min-height: 100dvh;
@@ -480,7 +346,7 @@ aside {
             "footer";
     }
 
-        .navbar-nav {
+    .navbar-nav {
         margin-top: 1rem;
     }
     
@@ -509,6 +375,11 @@ footer {
     box-shadow: 0px 5px 15px var(--box-shadow);
     margin-top: 1%;
     border-radius: 10px;
+}
+
+footer a {
+    color: var(--text-500);
+    text-decoration: none;
 }
 
 .image-slider { font-size: 20px; position: relative; }
@@ -547,7 +418,6 @@ footer {
 input {
     border-radius: 8px;
 }
-
 
 .input-group>input {
     width: 20rem;
@@ -781,7 +651,6 @@ textarea {
     transform: rotate(90deg);
 }
 
-/* Убираем стандартную иконку Bootstrap */
 .navbar-toggler-icon {
     display: none;
 }
