@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>Вход &#x2014; LUWRAN Social</title>
 #parse("inc-head-links.vm")
-#parse("login-styles.vm")
 </head>
 <body>
     <div class="container_nbs">
