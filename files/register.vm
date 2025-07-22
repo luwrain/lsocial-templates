@@ -112,11 +112,11 @@
             </div>
 
             <div class="login-links" style="margin-top: 2rem;">
-                Нет аккаунта? 
-                <a aria-label="Перейти к регистрации" 
+                Уже есть аккаунт? 
+                <a aria-label="Вернуться к входу" 
                 href="/register" 
-                title="Регистрация">
-                    Зарегистрироваться
+                title="Вход">
+                    Войти
                 </a>
             </div>
         </main>
