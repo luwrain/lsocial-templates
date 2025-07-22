@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+docker run --rm --name webdebug -v /files:/files -p 80:8080 webdebug

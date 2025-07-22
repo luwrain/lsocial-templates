@@ -1,0 +1,266 @@
+%
+%Copyright 2024-2025 Michael Pozhidaev <msp@luwrain.org>
+%
+% Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+% in compliance with the License. You may obtain a copy of the License at
+%
+%* http://www.apache.org/licenses/LICENSE-2.0
+%
+% Unless required by applicable law or agreed to in writing, software distributed under the License
+% is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+% or implied. See the License for the specific language governing permissions and limitations under
+% the License.
+%
+
+\documentclass[12pt,a5paper]{book}
+
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[paperwidth=145mm,paperheight=205mm,left=1.5cm,right=1.5cm,top=1cm,bottom=2cm,bindingoffset=0cm]{geometry}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{listingsutf8}
+\usepackage{breakurl}
+\usepackage{hyperref}
+\usepackage{cmap}
+\usepackage{xspace}
+\usepackage{setspace}
+\usepackage{textcomp}
+\usepackage{etoolbox}
+\usepackage{fancyhdr}
+\usepackage{needspace}
+\usepackage{titlesec}
+\usepackage{indentfirst}
+\usepackage{caption}
+
+%% Makes URLs breakable at the end of the line
+\hypersetup{
+  breaklinks=true,
+  hidelinks = true,
+  pdftitle = {$TITLE},
+  pdfauthor = {$AUTHORS},
+  pdfkeywords = {},
+  pdfcreator = {},
+  pdfproducer = {}
+}
+
+%% Bibliography items with a dot after the number (1., 2., ...)
+\makeatletter \renewcommand{\@biblabel}[1]{#1.\hfill}
+
+%%Modifying captions for figures and tables:
+\setlength{\abovecaptionskip}{0pt plus 3pt}
+\makeatletter
+\long\def\@makecaption#1#2{%
+\vspace{\abovecaptionskip}%
+\sbox{\@tempboxa}{\normalfont #1.~#2}
+\ifdim \wd\@tempboxa >\hsize
+{\normalfont #1.~#2}\par
+\else
+\global\@minipagefalse
+\hbox to \hsize {\hfill {\normalfont #1.~#2}\hfill}%
+\fi
+\vspace{\belowcaptionskip}}
+
+%% Fixing listing captions
+\DeclareCaptionLabelFormat{listinglabel}{{\bf \sffamily #1~#2}}
+\captionsetup[lstlisting]{labelformat=listinglabel}
+
+
+%% Listings with Cyrillic letters and with smaller font size
+\lstset{inputencoding=utf8/koi8-r,
+basicstyle = \footnotesize,
+  showstringspaces=false}
+
+\newcommand*{\No}{\textnumero}
+
+%%Задаём типовые размеры шрифтов
+\newcommand {\titlefont} {\Large }
+\newcommand {\authorfont} {\Large}
+\newcommand {\publisherfont} {\large \it}
+\newcommand {\abstractfont} {\Large \it}
+\newcommand {\maintextfont} {\normalfont}
+
+%%Исправляем вертикальные отступы вокруг заголовков глав
+\titleformat{\chapter}[display]   
+{\normalfont\huge\bfseries}{\chaptertitlename\ \thechapter}{20pt}{\Huge}   
+\titlespacing*{\chapter}{0pt}{20pt}{20pt}
+
+%% Removing needless page decoration 
+\fancypagestyle{plain}{%
+\fancyhf{}
+\fancyfoot[C]{\small \thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}}
+\pagestyle{plain}
+
+
+%% Fixing view of chapter and sections
+\makeatletter
+\patchcmd{\chapter}{\if@openright\cleardoublepage\else\clearpage\fi}{}{}{}
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\maintextfont}}
+\renewcommand\subsection{\@startsection {subsection}{2}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\maintextfont}}
+\makeatother
+
+%% Bibliography title
+%%\renewcommand{\bibname}{Список литературы}
+
+\makeatletter
+\gdef\@bibname{Список литературы}
+\makeatother
+
+
+%% Greek letters in equations must not be italic
+\DeclareSymbolFont{greek}{U}{eur}{m}{n}                                                        
+\SetSymbolFont{greek}{bold}{U}{eur}{b}{n}                                                      
+\DeclareSymbolFontAlphabet{\gr}{greek}                                                         
+\DeclareMathSymbol{\alpha}{\mathord}{greek}{"0B}                                               
+\DeclareMathSymbol{\beta}{\mathord}{greek}{"0C}                                                
+\DeclareMathSymbol{\gamma}{\mathord}{greek}{"0D}                                               
+\DeclareMathSymbol{\delta}{\mathord}{greek}{"0E}                                               
+\DeclareMathSymbol{\epsilon}{\mathord}{greek}{"0F}                                             
+\DeclareMathSymbol{\zeta}{\mathord}{greek}{"10}                                                
+\DeclareMathSymbol{\eta}{\mathord}{greek}{"11}                                                 
+\DeclareMathSymbol{\theta}{\mathord}{greek}{"12}                                               
+\DeclareMathSymbol{\iota}{\mathord}{greek}{"13}                                                
+\DeclareMathSymbol{\kappa}{\mathord}{greek}{"14}                                               
+\DeclareMathSymbol{\lambda}{\mathord}{greek}{"15}                                              
+\DeclareMathSymbol{\mu}{\mathord}{greek}{"16}                                                  
+\DeclareMathSymbol{\nu}{\mathord}{greek}{"17}                                                  
+\DeclareMathSymbol{\xi}{\mathord}{greek}{"18}                                                  
+\DeclareMathSymbol{\pi}{\mathord}{greek}{"19}                                                  
+\DeclareMathSymbol{\rho}{\mathord}{greek}{"1A}                                                 
+\DeclareMathSymbol{\sigma}{\mathord}{greek}{"1B}                                               
+\DeclareMathSymbol{\tau}{\mathord}{greek}{"1C}                                                 
+             \DeclareMathSymbol{\upsilon}{\mathord}{greek}{"1D}                                             
+\DeclareMathSymbol{\phi}{\mathord}{greek}{"1E}                                                 
+\DeclareMathSymbol{\chi}{\mathord}{greek}{"1F}                                                 
+\DeclareMathSymbol{\psi}{\mathord}{greek}{"20}                                                 
+\DeclareMathSymbol{\omega}{\mathord}{greek}{"21}                                               
+\DeclareMathSymbol{\varepsilon}{\mathord}{greek}{"22}                                          
+\DeclareMathSymbol{\vartheta}{\mathord}{greek}{"23}                                            
+\DeclareMathSymbol{\varpi}{\mathord}{greek}{"24}                                               
+\let\varrho\rho                                                                                
+\let\varsigma\sigma                                                                            
+\DeclareMathSymbol{\varphi}{\mathord}{greek}{"27}                                              
+
+\begin{document}
+\begin{titlepage}
+  \begin{center}
+
+#if($TITLE_PAGE_TOP_NOTE != "")
+{\large $TITLE_PAGE_TOP_NOTE }
+
+\vspace{3cm}
+#else
+\vspace{5cm}
+#end
+
+{\Large \sffamily $AUTHORS }
+
+\vspace{1.5cm}
+
+\begin{spacing}{1.5}
+
+{\Large \bf \sffamily $TITLE_CAP }
+
+\end{spacing}
+
+#if($BOOK_TYPE != "")
+
+\vspace{2cm}
+
+{\large $BOOK_TYPE }
+#end
+
+#if($DATE != "" && $LOCATION != "")
+
+\vskip 0pt plus 1filll
+
+  {\Large $LOCATION~--- $DATE }
+#end
+\end{center}
+\end{titlepage}
+
+\newpage
+
+\thispagestyle{empty}
+\normalfont
+\sloppy
+
+$ABSTRACT
+
+\newpage
+\pagestyle{plain}
+
+#if($TOC_BEGIN == "true")
+\tableofcontents
+\newpage
+#end
+
+%%FIXME:
+\begin{center}
+\section*{Предисловие}
+\end{center}
+
+#foreach($SECT in $SECTIONS)
+#if ($SECT.type == "TEXT")
+$SECT.text
+
+#end
+#if ($SECT.type == "IMAGE")
+  \begin{figure}[!b]
+  \begin{center}
+\includegraphics[width=10cm,keepaspectratio]{$SECT.imageName}
+\end{center}
+#if ($SECT.caption != "")
+\caption{$SECT.caption}
+#end
+#if ($SECT.label != "")
+\label{$SECT.label}
+#end
+\end{figure}
+
+#end
+#if ($SECT.type == "EQUATION")
+  \begin{equation}
+#if ($SECT.label != "")
+\label{$SECT.label}
+#end
+$SECT.text
+\end{equation}
+
+#end
+#if ($SECT.type == "LISTING")
+%%\lstinputlisting[caption=$CAPTION]{$TEXT}
+\needspace{3cm}
+
+\lstinputlisting[language=$SECT.lang,label={$SECT.label},caption={$SECT.caption}]{$SECT.text}
+
+#end
+
+
+#end
+
+#if($BIBLIO != "")
+
+\newpage 
+\begin{thebibliography}{0}
+
+$BIBLIO
+
+\end{thebibliography}
+#end
+
+#if($TOC_END == "true")
+\newpage
+\tableofcontents
+#end
+
+\end{document}
