@@ -22,33 +22,41 @@ public class DebugServlet extends HttpServlet
 
     @Override protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException
     {
-	switch(req.getRequestURI())
+
+	if (req.getRequestURI().startsWith("/css/"))
 	{
-	case "/main.css": {
-	    final var text = readTextFile(FILES_DIR.resolve("main.css"));
-	    			        resp.setContentType("text/css");
+	final var text = readTextFile(FILES_DIR.resolve(req.getRequestURI().substring(5)));
+	resp.setContentType("text/css");
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(text.stream().collect(joining("\n")));
 	return;
-	}
-	case "/":
-	    	    			        resp.setContentType("text/html");
+    }
+
+    switch(req.getRequestURI())
+    {
+    case "/":
+	resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(main());
 	return;
-		case "/login":
-	    	    			        resp.setContentType("text/html");
+    case "/login":
+	resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(login(false));
 	return;
-		case "/login-values":
-	    	    			        resp.setContentType("text/html");
+    case "/login-values":
+	resp.setContentType("text/html");
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(login(true));
 	return;
-	}
-        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+	    case "/capture":
+	resp.setContentType("text/html");
+        resp.setStatus(HttpServletResponse.SC_OK);
+	resp.getWriter().println(capture());
+	return;
     }
+    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+}
 
     String main() throws IOException
     {
@@ -69,6 +77,16 @@ public class DebugServlet extends HttpServlet
 				c.put("message", putValues?"Чупакабры не существует. Регистрация отклонена.":"");
 	return render(c, "login.vm");
 	    }
+
+        String capture() throws IOException
+    {
+	final var c = new VelocityContext();
+	c.put("audio", "https://luwrain.social/capture/audio.mp3");
+		c.put("image", "https://luwrain.social/capture/image.png");
+				c.put("attemptsLeft", "5");
+	return render(c, "capture.vm");
+	    }
+
 
     String render(VelocityContext context, String templateName) throws IOException
     {

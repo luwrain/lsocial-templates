@@ -8,7 +8,6 @@ import lombok.*;
 
 import static java.util.stream.Collectors.*;
 
-
 @Data
 @AllArgsConstructor
 public class MainPageItem
