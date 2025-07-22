@@ -114,7 +114,7 @@
             <div class="login-links" style="margin-top: 2rem;">
                 Уже есть аккаунт? 
                 <a aria-label="Вернуться к входу" 
-                href="/register" 
+                href="/login" 
                 title="Вход">
                     Войти
                 </a>
