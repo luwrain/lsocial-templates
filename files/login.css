@@ -1,0 +1,223 @@
+/* Основные анимации */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+    100% { transform: translateY(0px); }
+}
+
+/* Логотип с анимацией */
+.login-header {
+    animation: fadeIn 0.8s ease-out, float 4s ease-in-out infinite;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* Форма входа */
+.login-panel {
+    animation: fadeIn 0.8s ease-out 0.2s forwards;
+    opacity: 0;
+    background-color: var(--background-50);
+    padding: 2.5rem;
+    border-radius: 16px;
+    max-width: 400px;
+    margin: 2rem auto;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+/* Поля ввода */
+.field {
+    margin-bottom: 1.8rem;
+    position: relative;
+}
+
+.field input {
+    width: 100%;
+    padding: 1.2rem 1rem;
+    font-size: 1.1rem;
+    border: 2px solid var(--primary-300);
+    border-radius: 10px;
+    background-color: var(--background-100);
+    color: var(--text-800);
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.field input:focus {
+    border-color: var(--primary-500);
+    box-shadow: 0 0 0 3px rgba(85, 170, 170, 0.2);
+    transform: translateY(-2px);
+}
+
+.field label {
+    display: block;
+    margin-bottom: 0.6rem;
+    font-size: 1.1rem;
+    color: var(--text-700);
+    font-weight: 500;
+}
+
+/* Кнопка входа */
+.login-button {
+    display: block;
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.2rem;
+    background: var(--primary-500);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    margin-top: 1.5rem;
+}
+
+.login-button:hover {
+    background: var(--primary-600);
+    transform: translateY(-3px);
+    box-shadow: 0 7px 14px rgba(0,0,0,0.15);
+}
+
+.login-button:active {
+    transform: translateY(1px);
+}
+
+/* Разделитель */
+.login-divider {
+    display: flex;
+    align-items: center;
+    margin: 2rem 0;
+    color: var(--text-400);
+}
+
+.login-divider::before,
+.login-divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--text-300);
+}
+
+.login-divider span {
+    padding: 0 1rem;
+}
+
+/* Кнопки соцсетей */
+.social-login {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 1.5rem 0;
+}
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--background-100);
+    transition: all 0.3s ease;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    border: 1px solid var(--text-300);
+}
+
+.social-btn:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+    background: var(--background-200);
+}
+
+.social-btn svg {
+    width: 24px;
+    height: 24px;
+    fill: var(--text-700);
+}
+
+.social-btn:hover svg {
+    fill: var(--text-900);
+}
+
+/* Дополнительные ссылки */
+.login-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    font-size: 1.05rem;
+}
+
+.login-links a {
+    color: var(--primary-600);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.login-links a:hover {
+    color: var(--primary-800);
+    text-decoration: underline;
+}
+
+/* Сообщения об ошибках */
+.error-message {
+    color: var(--accent-700);
+    background-color: var(--accent-100);
+    padding: 0.8rem 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+    border: 1px solid var(--accent-300);
+}
+
+
+
+/* Дополнительные стили для регистрации */
+.password-hint {
+    font-size: 0.85rem;
+    color: var(--gray-600);
+    margin-top: 0.25rem;
+}
+.checkbox-group {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 1rem;
+}
+.checkbox-group input {
+    margin-right: 10px;
+    margin-top: 3px;
+}
+.terms-links {
+    color: var(--primary-500);
+    text-decoration: underline;
+}
+
+.error-message {
+    background-color: #ffebee;
+    color: #b71c1c;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #b71c1c;
+}
+
+.success-message {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    padding: 1rem;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 4px solid #2e7d32;
+}
+
+
+.instructions {
+    color: var(--gray-600);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    text-align: center;
+}
