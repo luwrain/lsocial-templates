@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Регистрация &#x2014; LUWRAN Social</title>
+    <title>Регистрация &#x2014; LUWRAIN Social</title>
     #parse("inc-head-links.vm")
     <!-- Подключаем reCAPTCHA -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
