@@ -2,85 +2,56 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Регистрация &#x2014; LUWRAN Social</title>
-    #parse("inc-head-links.vm")
-    <!-- Подключаем reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <title>Вход &#x2014; LUWRAN Social</title>
+#parse("inc-head-links.vm")
 </head>
 <body>
     <div class="container_nbs">
-        #parse("inc-header-nologin.vm")
-        
+#parse("inc-header-nologin.vm")
         <main class="login-panel">
             <div class="login-header">
                 <svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="var(--primary-500)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <h2 style="color: var(--primary-700); margin-top: 1rem;">Регистрация в LUWRAIN</h2>
+                <h2 style="color: var(--primary-700); margin-top: 1rem;">Вход в LUWRAIN</h2>
             </div>
             
             <!-- Отображение сообщений об ошибках -->
             #if($message)
-            <div class="#if($messageType == 'success')success-message#{else}error-message#end">
+            <div class="error-message">
                 $message
             </div>
             #end
             
-            <form action="/register" method="post" enctype="application/x-www-form-urlencoded">
+            <form action="/login/" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="field">
                     <label for="nickname">Имя пользователя</label>
                     <input type="text" name="nickname" id="nickname" maxlength="30" required #if($login)value="$login"#end>
                 </div>
-                
-                <div class="field">
-                    <label for="email">Email</label>
-                    <input type="email" name="email" id="email" required #if($email)value="$email"#end>
-                </div>
-                
+
                 <div class="field">
                     <label for="password">Пароль</label>
                     <input type="password" name="password" id="password" maxlength="30" required>
-                    <p class="password-hint">Минимум 8 символов</p>
                 </div>
-                
-                <div class="field">
-                    <label for="confirm_password">Подтвердите пароль</label>
-                    <input type="password" name="confirm_password" id="confirm_password" maxlength="30" required>
-                </div>
-                
-                <!-- Капча (обязательная для регистрации) -->
+
+                <!-- Добавлена капча -->
+                #if($showCaptcha)
                 <div class="field">
                     <div class="g-recaptcha" data-sitekey="$SITE_KEY"></div>
                 </div>
-                
-                <!-- Юридические соглашения -->
-                <div class="checkbox-group">
-                    <input type="checkbox" id="terms" name="terms" required>
-                    <label for="terms">
-                        Я принимаю <a aria-label="Пользовательское соглашение" role="button" href="/terms" class="terms-links" target="_blank">Пользовательское соглашение</a>
-                    </label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="privacy" name="privacy" required>
-                    <label for="privacy">
-                        Я согласен с <a aria-label="Политика конфиденциальности" role="button" href="/privacy" class="terms-links" target="_blank">Политикой конфиденциальности</a>
-                    </label>
-                </div>
-                
-                <div class="checkbox-group">
-                    <input type="checkbox" id="marketing" name="marketing">
-                    <label for="marketing">
-                        Я хочу получать новости и специальные предложения
-                    </label>
-                </div>
-                
-                <button type="submit" class="login-button">Зарегистрироваться</button>
+                #end
+
+                <input type="hidden" name="redirect" value="$redirect">
+                <button aria-label="Войти в аккаунт" role="button" type="submit" class="login-button">Войти</button>
             </form>
             
+            <div class="login-links">
+                <a aria-label="Восстановление пароля" role="button" title="Восстановление пароля" href="/forgot-password">Забыли пароль?</a>
+            </div>
+            
             <div class="login-divider">
-                <span>Или зарегистрироваться через</span>
+                <span>Или войти через</span>
             </div>
             
             <div class="social-login">
@@ -112,16 +83,16 @@
             </div>
 
             <div class="login-links" style="margin-top: 2rem;">
-                Уже есть аккаунт? 
-                <a aria-label="Вернуться к входу" 
-                href="/login" 
-                title="Вход">
-                    Войти
+                Нет аккаунта? 
+                <a aria-label="Перейти к регистрации" 
+                href="/sign-up" 
+                title="Зарегистрироваться в LUWRAIN Social">
+                    Зарегистрироваться
                 </a>
             </div>
         </main>
         
-        #parse("inc-footer.vm")
+#parse("inc-footer.vm")
     </div>
 </body>
 </html>
