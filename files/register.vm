@@ -41,7 +41,7 @@
                 <div class="field">
                     <label for="password">Пароль</label>
                     <input type="password" name="password" id="password" maxlength="30" required>
-                    <p class="password-hint">Минимум 8 символов</p>
+                    <p class="password-hint">Пароль должен быть минимум 8 символов</p>
                 </div>
                 
                 <div class="field">

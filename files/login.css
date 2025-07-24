@@ -24,7 +24,7 @@
     background-color: var(--background-50);
     padding: 2.5rem;
     border-radius: 16px;
-    max-width: 400px;
+    max-width: 600px;
     margin: 2rem auto;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
 }
@@ -33,6 +33,7 @@
 .field {
     margin-bottom: 1.8rem;
     position: relative;
+    width: 70%;
 }
 
 .field input {
@@ -186,6 +187,7 @@
     display: flex;
     align-items: flex-start;
     margin-bottom: 1rem;
+    width: 80%;
 }
 .checkbox-group input {
     margin-right: 10px;
