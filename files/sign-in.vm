@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="utf-8">
-    <title>Вход &#x2014; LUWRAN Social</title>
+    <title>Вход &#x2014; LUWRAIN Social</title>
 #parse("inc-head-links.vm")
 </head>
 <body>
@@ -14,7 +14,7 @@
                     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                     <circle cx="12" cy="7" r="4"></circle>
                 </svg>
-                <h2 style="color: var(--primary-700); margin-top: 1rem;">Вход в LUWRAIN</h2>
+                <h2 style="color: var(--primary-700); margin-top: 1rem;">Вход в&#160;LUWRAIN Social</h2>
             </div>
             
             <!-- Отображение сообщений об ошибках -->

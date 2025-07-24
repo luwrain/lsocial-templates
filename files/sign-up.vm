@@ -27,7 +27,7 @@
             </div>
             #end
 
-            <form action="/sign-up"_handle/ method="post" enctype="application/x-www-form-urlencoded">
+            <form action="/sign-up/_handle/" method="post" enctype="application/x-www-form-urlencoded">
                 <div class="field">
                     <label for="nickname">Имя пользователя</label>
                     <input type="text" name="nickname" id="nickname" maxlength="$nicknameLenLimit" required #if($nickname)value="$nickname"#end>
@@ -40,15 +40,15 @@
 
                 <div class="field">
                     <label for="password">Пароль</label>
-                    <input type="password" name="password" id="password" maxlength="$passwdLenLimit" required>
-                    <p class="password-hint">Минимум $passwdMinLen символов</p>
+                    <input type="password" name="password" id="password" maxlength="$passwdLenLimit" required #if($passwd)value="$passwd"#end>
+                    <p class="password-hint">Пароль должен быть минимум $passwdMinLen символов</p>
                 </div>
 
                 <div class="field">
                     <label for="confirm_password">Подтвердите пароль</label>
-                    <input type="password" name="confirm_password" id="confirm_password" maxlength="$passwdLenLimit" required>
+                    <input type="password" name="confirm_password" id="confirm_password" maxlength="$passwdLenLimit" required #if($confirm_passwd)value="$confirm_passwd"#end>
                 </div>
-                
+
                 <!-- Капча (обязательная для регистрации) -->
                 <div class="field">
                     <div class="g-recaptcha" data-sitekey="$SITE_KEY"></div>
