@@ -54,6 +54,16 @@ public class DebugServlet extends HttpServlet
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(capture());
 	return;
+		    case "/forget":
+	resp.setContentType("text/html");
+        resp.setStatus(HttpServletResponse.SC_OK);
+	resp.getWriter().println(forget());
+	return;
+			    case "/new-publ":
+	resp.setContentType("text/html");
+        resp.setStatus(HttpServletResponse.SC_OK);
+	resp.getWriter().println(newPubl());
+	return;
     }
     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 }
@@ -87,6 +97,22 @@ public class DebugServlet extends HttpServlet
 	return render(c, "capture.vm");
 	    }
 
+            String forget() throws IOException
+    {
+	final var c = new VelocityContext();
+	c.put("nickname", "foobar");
+		c.put("question", "Сколько голов у вашего домашнего дракона?");
+	return render(c, "forget.vm");
+	    }
+
+            String newPubl() throws IOException
+    {
+	final var c = new VelocityContext();
+	c.put("type", "book");
+		c.put("name", "О черепахах");
+		c.put("title", "Вычисленеи второй производной скорости у галапагосских черепах");
+	return render(c, "new-publ.vm");
+	    }
 
     String render(VelocityContext context, String templateName) throws IOException
     {
