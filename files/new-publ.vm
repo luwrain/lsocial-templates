@@ -37,9 +37,9 @@
       <p>Загрузка формы создания публикации...</p>
     </div>
     
-    <div id="appContent" class="container_nbs" style="display: none;">
+    <div class="container_nbs" id="appContent" style="display: none;">
       #parse("inc-header-login.vm")
-      <main class="publication-form-container">
+      <main class="publication-form-container" style="grid-area: content;">
         <div class="form-header">
           <h1>Создание новой публикации</h1>
           <div class="progress-indicator">

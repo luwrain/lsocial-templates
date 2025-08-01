@@ -489,7 +489,7 @@ try {
         
         if (initialLoading && appContent) {
             initialLoading.style.display = 'none';
-            appContent.style.display = 'block';
+            appContent.style.display = 'grid';
         }
     }, 300);
     
