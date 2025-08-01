@@ -694,3 +694,64 @@ textarea {
     border-color: var(--primary-300);
     margin: 0.5rem 0;
 }
+
+/* Дополнительные стили для улучшения доступности */
+      .card-article {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      
+      .card-article:focus-within, 
+      .card-article:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        outline: 2px solid var(--primary-500);
+      }
+      
+      .card-title a:focus {
+        outline: 3px solid var(--primary-300);
+        outline-offset: 3px;
+      }
+      
+      .link-container:focus-within {
+        outline: 2px dashed var(--primary-500);
+        border-radius: 4px;
+      }
+      
+      .tag {
+        transition: background-color 0.2s ease;
+      }
+      
+      .tag:focus, .tag:hover {
+        background-color: var(--primary-300) !important;
+        color: white !important;
+      }
+      
+      .empty-state svg {
+        fill: var(--primary-500);
+      }
+      
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        border: 0;
+      }
+      
+      .skip-link {
+        position: absolute;
+        top: -40px;
+        left: 0;
+        background: var(--primary-500);
+        color: white;
+        padding: 8px;
+        z-index: 10000;
+        transition: top 0.3s;
+      }
+      
+      .skip-link:focus {
+        top: 0;
+      }

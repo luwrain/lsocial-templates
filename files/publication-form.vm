@@ -1,0 +1,532 @@
+#[[
+console.log('Publication form script started');
+
+try {
+    // Элементы формы
+    const form = document.getElementById('publicationForm');
+    if (!form) throw new Error('Form element not found');
+    
+    const sections = document.querySelectorAll('.form-section');
+    if (sections.length === 0) throw new Error('Form sections not found');
+    
+    // Текущий шаг
+    let currentStep = 1;
+    
+    // Показываем первый шаг
+    showStep(currentStep);
+    
+    // Инициализация элементов
+    const typeOptions = document.querySelectorAll('.type-option');
+    const nextButtons = document.querySelectorAll('.next-step');
+    const prevButtons = document.querySelectorAll('.prev-step');
+    const publicationTypeInput = document.getElementById('publicationType');
+    const specificAttributesSection = document.getElementById('specificAttributes');
+    
+    // Проверка элементов
+    if (!typeOptions.length) console.warn('Type options not found');
+    if (!nextButtons.length) console.warn('Next buttons not found');
+    if (!prevButtons.length) console.warn('Prev buttons not found');
+    if (!publicationTypeInput) console.warn('Publication type input not found');
+    if (!specificAttributesSection) console.warn('Specific attributes section not found');
+    
+    // Обработчики для выбора типа публикации
+    typeOptions.forEach(function(option) {
+        // Улучшенные ARIA-атрибуты
+        option.setAttribute('role', 'radio');
+        option.setAttribute('aria-label', option.querySelector('span').textContent + ', тип публикации');
+        
+        option.addEventListener('click', function() {
+            typeOptions.forEach(function(opt) { 
+                opt.classList.remove('selected');
+                opt.setAttribute('aria-checked', 'false');
+            });
+            this.classList.add('selected');
+            this.setAttribute('aria-checked', 'true');
+            publicationTypeInput.value = this.dataset.type;
+            
+            // После выбора типа автоматически фокусируемся на кнопке "Далее"
+            setTimeout(() => {
+                const nextBtn = this.closest('.form-section').querySelector('.next-step');
+                if (nextBtn) nextBtn.focus();
+            }, 50);
+        });
+        
+        // Обработка нажатия клавиш для доступности
+        option.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                this.click();
+                
+                // После выбора типа автоматически фокусируемся на кнопке "Далее"
+                setTimeout(() => {
+                    const nextBtn = this.closest('.form-section').querySelector('.next-step');
+                    if (nextBtn) nextBtn.focus();
+                }, 50);
+            }
+        });
+    });
+    
+    // Обработчики для кнопок "Далее"
+    nextButtons.forEach(function(button) {
+        button.setAttribute('aria-label', 'Перейти к следующему шагу');
+        button.addEventListener('click', function() {
+            if (validateStep(currentStep)) {
+                currentStep++;
+                showStep(currentStep);
+                if (currentStep === 4) loadSpecificFields(publicationTypeInput.value);
+                if (currentStep === 5) updatePreview();
+            }
+        });
+    });
+    
+    // Обработчики для кнопок "Назад"
+    prevButtons.forEach(function(button) {
+        button.setAttribute('aria-label', 'Вернуться к предыдущему шагу');
+        button.addEventListener('click', function() {
+            currentStep--;
+            showStep(currentStep);
+        });
+    });
+    
+    // Обновление индикатора прогресса
+    function updateProgressIndicator(step) {
+        const steps = document.querySelectorAll('.progress-step');
+        steps.forEach((el, index) => {
+            if (index + 1 === step) {
+                el.classList.add('active');
+                el.setAttribute('aria-current', 'step');
+                el.setAttribute('aria-label', `Шаг ${index + 1}, текущий`);
+            } else {
+                el.classList.remove('active');
+                el.removeAttribute('aria-current');
+                el.setAttribute('aria-label', `Шаг ${index + 1}`);
+            }
+        });
+    }
+    
+    // Функция для отображения текущего шага
+    function showStep(step) {
+        console.log('Showing step', step);
+        const activeSection = document.querySelector(`.form-section[data-step="${step}"]`);
+        if (!activeSection) {
+            console.error('Active section not found for step', step);
+            return;
+        }
+        
+        sections.forEach(function(section) {
+            section.classList.remove('active');
+            // Убираем aria-hidden при скрытии
+            section.removeAttribute('aria-hidden');
+        });
+        
+        activeSection.classList.add('active');
+        
+        // Фокусируемся на первом элементе без задержки
+        const firstInput = activeSection.querySelector('input, button, .type-option');
+        if (firstInput) {
+            setTimeout(() => firstInput.focus(), 10);
+        }
+        
+        updateProgressIndicator(step);
+        
+        // Прокрутка к активному разделу
+        if (activeSection.scrollIntoView) {
+            activeSection.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    }
+    
+    // Функция валидации шага
+    function validateStep(step) {
+        console.log('Validating step', step);
+        let isValid = true;
+        const errorMessages = [];
+        
+        // Удаление предыдущих ошибок - ВСЕХ, включая уведомления
+        document.querySelectorAll('.error-message, .alert-error').forEach(el => {
+            // Проверяем, что это именно наши ошибки, а не системные сообщения
+            if (el.closest('#publicationForm') && el.parentNode) {
+                el.parentNode.removeChild(el);
+            }
+        });
+        
+        if (step === 1) {
+            if (!publicationTypeInput.value) {
+                errorMessages.push('Пожалуйста, выберите тип публикации');
+                isValid = false;
+                // Добавление визуальной ошибки
+                const errorEl = document.createElement('div');
+                errorEl.className = 'error-message';
+                errorEl.textContent = 'Пожалуйста, выберите тип публикации';
+                document.querySelector('.publication-type-selector').after(errorEl);
+            }
+        }
+        
+        if (step === 2) {
+            const nameInput = document.getElementById('name');
+            const subjectInput = document.getElementById('subject');
+            
+            if (!nameInput.value.trim()) {
+                errorMessages.push('Поле "Название" обязательно для заполнения');
+                isValid = false;
+                showFieldError(nameInput, 'Это поле обязательно для заполнения');
+            }
+            
+            if (!subjectInput.value.trim()) {
+                errorMessages.push('Поле "Предмет" обязательно для заполнения');
+                isValid = false;
+                showFieldError(subjectInput, 'Это поле обязательно для заполнения');
+            }
+        }
+        
+        if (step === 3) {
+            const titleInput = document.getElementById('title');
+            if (!titleInput.value.trim()) {
+                errorMessages.push('Поле "Заголовок" обязательно для заполнения');
+                isValid = false;
+                showFieldError(titleInput, 'Это поле обязательно для заполнения');
+            }
+        }
+        
+        // Показываем ошибки в виде уведомлений
+        if (errorMessages.length > 0 && step !== 1) {
+            const errorNotification = document.createElement('div');
+            errorNotification.className = 'alert alert-error';
+            errorNotification.setAttribute('role', 'alert');
+            errorNotification.setAttribute('aria-live', 'assertive');
+            errorNotification.innerHTML = `
+                <strong>Ошибки в форме:</strong>
+                <ul>
+                    ${errorMessages.map(msg => `<li>${msg}</li>`).join('')}
+                </ul>
+            `;
+            
+            const activeSection = document.querySelector(`.form-section[data-step="${step}"]`);
+            if (activeSection) {
+                activeSection.prepend(errorNotification);
+                
+                // Анимация для привлечения внимания
+                if (errorNotification.animate) {
+                    errorNotification.animate([
+                        { transform: 'scale(0.98)', opacity: 0.8 },
+                        { transform: 'scale(1)', opacity: 1 }
+                    ], {
+                        duration: 300,
+                        iterations: 1
+                    });
+                }
+            }
+        }
+        
+        return isValid;
+    }
+    
+    // Показать ошибку для конкретного поля
+    function showFieldError(input, message) {
+        const errorEl = document.createElement('div');
+        errorEl.className = 'error-message';
+        errorEl.textContent = message;
+        errorEl.style.color = '#e53935';
+        errorEl.style.marginTop = '5px';
+        errorEl.style.fontSize = '0.9rem';
+        
+        input.parentNode.insertBefore(errorEl, input.nextSibling);
+        
+        // Анимация для привлечения внимания
+        input.style.borderColor = '#e53935';
+        if (input.animate) {
+            input.animate([
+                { borderColor: '#e53935' },
+                { borderColor: '#ff9800' },
+                { borderColor: '#e53935' }
+            ], {
+                duration: 600,
+                iterations: 3
+            });
+        }
+    }
+    
+    // Функция загрузки специфических полей
+    function loadSpecificFields(type) {
+        console.log('Loading specific fields for type:', type);
+        let html = '<h2>Специфическая информация</h2><div class="form-grid">';
+        
+        switch(type) {
+            case 'book':
+                html += `
+                    <div class="form-group">
+                        <label for="place">Место публикации</label>
+                        <input type="text" id="place" name="place" placeholder="Москва">
+                    </div>
+                    <div class="form-group">
+                        <label for="annotation">Аннотация</label>
+                        <textarea id="annotation" name="annotation" placeholder="Краткое описание книги"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="keywords">Ключевые слова</label>
+                        <input type="text" id="keywords" name="keywords" placeholder="квантовая механика, физика">
+                    </div>
+                    <div class="form-group">
+                        <label for="udk">УДК</label>
+                        <input type="text" id="udk" name="udk" placeholder="Универсальная десятичная классификация">
+                    </div>
+                    <div class="form-group">
+                        <label for="bbk">ББК</label>
+                        <input type="text" id="bbk" name="bbk" placeholder="Библиотечно-библиографическая классификация">
+                    </div>
+                    <div class="form-group">
+                        <label for="isbn">ISBN</label>
+                        <input type="text" id="isbn" name="isbn" placeholder="Международный стандартный книжный номер">
+                    </div>
+                    <div class="form-group">
+                        <label for="textAboveTitle">Текст над заглавием</label>
+                        <input type="text" id="textAboveTitle" name="textAboveTitle" placeholder="Например: Учебное пособие">
+                    </div>
+                    <div class="form-group">
+                        <label for="textBelowTitle">Текст под заглавием</label>
+                        <input type="text" id="textBelowTitle" name="textBelowTitle" placeholder="Например: Для студентов вузов">
+                    </div>
+                    <div class="form-group">
+                        <label for="bookType">Тип книги</label>
+                        <select id="bookType" name="bookType">
+                            <option value="">Выберите тип</option>
+                            <option value="textbook">Учебное пособие</option>
+                            <option value="manual">Методичка</option>
+                            <option value="monograph">Монография</option>
+                            <option value="other">Другое</option>
+                        </select>
+                    </div>
+                `;
+                break;
+                
+            case 'article':
+                html += `
+                    <div class="form-group">
+                        <label for="place">Место публикации</label>
+                        <input type="text" id="place" name="place" placeholder="Москва">
+                    </div>
+                    <div class="form-group">
+                        <label for="annotation">Аннотация</label>
+                        <textarea id="annotation" name="annotation" placeholder="Краткое описание статьи"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="keywords">Ключевые слова</label>
+                        <input type="text" id="keywords" name="keywords" placeholder="квантовая механика, физика">
+                    </div>
+                    <div class="form-group">
+                        <label for="udk">УДК</label>
+                        <input type="text" id="udk" name="udk" placeholder="Универсальная десятичная классификация">
+                    </div>
+                    <div class="form-group">
+                        <label for="journal">Журнал или конференция</label>
+                        <input type="text" id="journal" name="journal" placeholder="Название журнала или конференции">
+                    </div>
+                `;
+                break;
+                
+            default:
+                html += '<p class="no-specific-fields">Нет специфических полей для этого типа публикации</p>';
+        }
+        
+        html += `</div>
+            <div class="form-actions">
+                <button type="button" class="prev-step">Назад</button>
+                <button type="button" class="next-step">Далее</button>
+            </div>
+        `;
+        
+        specificAttributesSection.innerHTML = html;
+        
+        // Добавляем обработчики для новых кнопок
+        const newNextButtons = specificAttributesSection.querySelectorAll('.next-step');
+        newNextButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    showStep(currentStep);
+                    updatePreview();
+                }
+            });
+        });
+        
+        const newPrevButtons = specificAttributesSection.querySelectorAll('.prev-step');
+        newPrevButtons.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                currentStep--;
+                showStep(currentStep);
+            });
+        });
+    }
+    
+    // Функция обновления предпросмотра
+    function updatePreview() {
+        console.log('Updating preview');
+        
+        // Проверяем, что элементы предпросмотра существуют
+        const previewBasic = document.getElementById('previewBasicInfo');
+        const previewCommon = document.getElementById('previewCommonInfo');
+        const previewSpecific = document.getElementById('previewSpecificInfo');
+        
+        if (!previewBasic || !previewCommon || !previewSpecific) {
+            console.error('Preview elements not found');
+            return;
+        }
+        
+        const basicInfo = `
+            <p><strong>Тип публикации:</strong> ${getPublicationTypeName(publicationTypeInput.value)}</p>
+            <p><strong>Название:</strong> ${document.getElementById('name').value || 'не указано'}</p>
+            <p><strong>Предмет:</strong> ${document.getElementById('subject').value || 'не указано'}</p>
+            <p><strong>Теги:</strong> ${document.getElementById('tags').value || 'не указано'}</p>
+            <p><strong>Видимость:</strong> ${document.getElementById('visibility').options[document.getElementById('visibility').selectedIndex].text}</p>
+        `;
+        
+        previewBasic.innerHTML = basicInfo;
+        
+        const commonInfo = `
+            <p><strong>Заголовок:</strong> ${document.getElementById('title').value || 'не указано'}</p>
+            <p><strong>Подзаголовок:</strong> ${document.getElementById('subtitle').value || 'не указано'}</p>
+            <p><strong>Авторы:</strong> ${document.getElementById('authors').value || 'не указано'}</p>
+            <p><strong>Дата:</strong> ${document.getElementById('date').value || 'не указано'}</p>
+        `;
+        
+        previewCommon.innerHTML = commonInfo;
+        
+        let specificInfo = '';
+        const type = publicationTypeInput.value;
+        
+        switch(type) {
+            case 'book':
+                specificInfo = `
+                    <p><strong>Место публикации:</strong> ${document.getElementById('place')?.value || 'не указано'}</p>
+                    <p><strong>Аннотация:</strong> ${document.getElementById('annotation')?.value ? 'указана' : 'не указана'}</p>
+                    <p><strong>Ключевые слова:</strong> ${document.getElementById('keywords')?.value || 'не указано'}</p>
+                    <p><strong>УДК:</strong> ${document.getElementById('udk')?.value || 'не указано'}</p>
+                    <p><strong>ББК:</strong> ${document.getElementById('bbk')?.value || 'не указано'}</p>
+                    <p><strong>ISBN:</strong> ${document.getElementById('isbn')?.value || 'не указано'}</p>
+                    <p><strong>Тип книги:</strong> ${document.getElementById('bookType')?.options[document.getElementById('bookType')?.selectedIndex]?.text || 'не указано'}</p>
+                `;
+                break;
+                
+            case 'article':
+                specificInfo = `
+                    <p><strong>Место публикации:</strong> ${document.getElementById('place')?.value || 'не указано'}</p>
+                    <p><strong>Аннотация:</strong> ${document.getElementById('annotation')?.value ? 'указана' : 'не указана'}</p>
+                    <p><strong>Ключевые слова:</strong> ${document.getElementById('keywords')?.value || 'не указано'}</p>
+                    <p><strong>УДК:</strong> ${document.getElementById('udk')?.value || 'не указано'}</p>
+                    <p><strong>Журнал или конференция:</strong> ${document.getElementById('journal')?.value || 'не указано'}</p>
+                `;
+                break;
+                
+            default:
+                specificInfo = '<p>Нет специфической информации для этого типа публикации</p>';
+        }
+        
+        previewSpecific.innerHTML = specificInfo;
+    }
+    
+    // Вспомогательная функция для получения названия типа публикации
+    function getPublicationTypeName(type) {
+        const types = {
+            'book': 'Книга',
+            'article': 'Статья',
+            'presentation': 'Презентация',
+            'thesis': 'Диссертация',
+            'vkr': 'ВКР',
+            'coursework': 'Курсовая',
+            'test': 'Тест',
+            'lab': 'Лабораторная работа'
+        };
+        
+        return types[type] || type;
+    }
+    
+    // Автогенерация slug из названия
+    const nameInput = document.getElementById('name');
+    if (nameInput) {
+        nameInput.addEventListener('input', function() {
+            const slugInput = document.getElementById('slug');
+            if (slugInput && !slugInput.value) {
+                const slug = this.value
+                    .toLowerCase()
+                    .replace(/[^\w\s-а-яё]/g, '')
+                    .replace(/[\s_-]+/g, '-')
+                    .replace(/^-+|-+$/g, '');
+                slugInput.value = slug;
+            }
+        });
+    }
+    
+    // Обработчик отправки формы
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Проверяем все шаги перед отправкой
+        let allValid = true;
+        for (let i = 1; i <= 5; i++) {
+            if (!validateStep(i)) {
+                allValid = false;
+                showStep(i);
+                break;
+            }
+        }
+        
+        if (allValid) {
+            this.submit();
+        } else {
+            alert('Пожалуйста, исправьте ошибки в форме перед отправкой');
+        }
+    });
+    
+    // Инициализация индикатора прогресса
+    updateProgressIndicator(currentStep);
+    
+    // Скрываем индикатор загрузки после инициализации
+    setTimeout(() => {
+        const initialLoading = document.getElementById('initialLoading');
+        const appContent = document.getElementById('appContent');
+        
+        if (initialLoading && appContent) {
+            initialLoading.style.display = 'none';
+            appContent.style.display = 'block';
+        }
+    }, 300);
+    
+    console.log('Publication form initialized successfully');
+    
+} catch (error) {
+    console.error('Publication form error:', error);
+    
+    // Показать ошибку пользователю
+    const errorContainer = document.createElement('div');
+    errorContainer.className = 'alert alert-error';
+    errorContainer.style.margin = '2rem';
+    errorContainer.innerHTML = `
+        <h3>Ошибка при загрузке формы</h3>
+        <p>${error.message || 'Произошла непредвиденная ошибка'}</p>
+        <p>Пожалуйста, попробуйте обновить страницу или сообщите об ошибке администратору.</p>
+        <button onclick="window.location.reload()" style="
+            margin-top: 1rem;
+            padding: 10px 20px;
+            background: var(--primary-500);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        ">
+            Обновить страницу
+        </button>
+    `;
+    
+    // Попробовать добавить ошибку на страницу
+    const main = document.querySelector('main') || document.body;
+    if (main) {
+        main.prepend(errorContainer);
+    } else {
+        document.body.innerHTML = '';
+        document.body.appendChild(errorContainer);
+    }
+}
+]]#

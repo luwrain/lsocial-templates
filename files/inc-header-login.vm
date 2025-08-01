@@ -26,23 +26,23 @@
           <span class="text-truncate" style="max-width: 120px;">$user.name</span>
         </button>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-          <li><a class="dropdown-item" href="/create/">Создать материал</a></li>
-          <li><a class="dropdown-item" href="/profile/">Профиль</a></li>
+          <li><a class="dropdown-item" href="/create">Создать материал</a></li>
+          <li><a class="dropdown-item" href="/profile">Профиль</a></li>
           <li><hr class="dropdown-divider"></li>
-          <li><a class="dropdown-item text-danger" href="/logout/">Выйти</a></li>
+          <li><a class="dropdown-item text-danger" href="/logout">Выйти</a></li>
         </ul>
       </div>
       
       <!-- Мобильное меню пользователя (показывается только в бургер-меню) -->
       <ul class="navbar-nav d-lg-none">
         <li class="nav-item">
-          <a class="nav-link" href="/create/">Создать материал</a>
+          <a class="nav-link" href="/create">Создать материал</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/profile/">Профиль</a>
+          <a class="nav-link" href="/profile">Профиль</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link text-danger" href="/logout/">Выйти</a>
+          <a class="nav-link text-danger" href="/logout">Выйти</a>
         </li>
       </ul>
     </div>
