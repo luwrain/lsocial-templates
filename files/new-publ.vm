@@ -2,62 +2,221 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <title>Новая работа &#x2014; LUWRAIN Social</title>
-#parse("inc-head-links.vm")
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Новая публикация — LUWRAIN Social</title>
+    #parse("inc-head-links.vm")
+    <link rel="stylesheet" href="/css/publication-form.css">
+    <style>
+      .initial-loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: var(--background-50);
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+      }
+      .loading-spinner {
+        width: 50px;
+        height: 50px;
+        border: 5px solid rgba(85, 170, 170, 0.3);
+        border-radius: 50%;
+        border-top-color: var(--primary-500);
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+    </style>
   </head>
   <body>
-    <div class="container_nbs">
-#parse("inc-header-login.vm")
-      <main style="max-width: 60rem; min-width: 50rem; margin: 0 auto;">
-#if($TYPE == "GRADUATE")
-        <h1>Новая выпускная квалификационная работа</h1>
-        <p>Укажите информацию о&#160;вашей новой ВКР:</p>
-#end
-#if($TYPE == "PAPER_MCOL")
-        <h1>Новая статья</h1>
-        <p>Укажите информацию о&#160;вашей новой статье:</p>
-#end
-#if($TYPE == "THESIS")
-        <h1>Новая диссертация на&#160;соискание степени кандидата наук</h1>
-        <p>Укажите информацию о&#160;вашей новой диссертации:</p>
-	#end
-#if($MESSAGE != "")
-        <p><strong>Попробуйте ещё раз!</strong> $MESSAGE</p>
-#end
-        <form action="/publication/create/_handle/" method="post" enctype="application/x-www-form-urlencoded">
-          <div class="input-group">
-            <input type="text" name="name" id="name" value="$NAME" maxlength="50" placeholder="Моя ВКР" required>
-            <label for="name"><b>Название </b></label>
-          </div>
-          <div class="input-group">
-            <input type="text" name="title" id="title" value="$TITLE" maxlength="200" placeholder="Анализ психологии межзвёздного разума">
-            <label for="title"><b>Заглавие </b></label>
-          </div>
-          <div class="input-group">
-            <input type="text" name="subject" id="subject" value="$SUBJECT" maxlength="50" placeholder="Астропсихология">
-            <label for="subject"><b>Предмет</b></label>
-          </div>
-          <div class="input-group">
-            <input type="text" name="authors" id="authors" value="$AUTHORS" maxlength="100" placeholder="Сатурн Уранович Нептунов">
-            <label for="authors"><b>Авторы </b></label>
-          </div>
-          <div class="input-group">
-            <input type="text" name="location" id="location" value="$CITY" maxlength="30" placeholder="Ганимед">
-            <label for="location"><b>Город создания </b></label>
-          </div>
-          <div class="input-group">
-            <input type="text" name="date" id="date" value="$YEAR" maxlength="30" placeholder="2024">
-            <label for="date"><b>Год создания </b></label>
-          </div>
-	  <input type="hidden" name="type" value="$TYPE">
-          <button class="aButton" style="width: 13rem;" type="submit">Создать</button>
-        </form>
-	<p>Поле &#171;Название&#187; является обязательным.
-          Оно не&#160;используется в&#160;самой работе и является только внутренним обозначением для&#160вашего удобства.
-          Название работы, которое будет отображаться на&#160;титульном листе, должно быть задано в&#160;поле &#171;Заглавие&#187;. Если вы оставите это поле пустым, будет использовано значение поля &#171;Название&#187;.
-          Значение в&#160;поле &#171;Предмет&#187; используется для&#160;группировки ваших материалов и не&#160;используется при&#160;форматировании работы для&#160;печати.</p>
-      </main>
-#parse("inc-footer.vm")
+    <div id="initialLoading" class="initial-loading">
+      <div class="loading-spinner"></div>
+      <p>Загрузка формы создания публикации...</p>
     </div>
+    
+    <div class="container_nbs" id="appContent" style="display: none;">
+      #parse("inc-header-login.vm")
+      <main class="publication-form-container" style="grid-area: content;">
+        <div class="form-header">
+          <h1>Создание новой публикации</h1>
+          <div class="progress-indicator">
+            <div class="progress-step" data-step="1">1</div>
+            <div class="progress-step" data-step="2">2</div>
+            <div class="progress-step" data-step="3">3</div>
+            <div class="progress-step" data-step="4">4</div>
+            <div class="progress-step" data-step="5">5</div>
+          </div>
+        </div>
+        
+        #if($MESSAGE && !$MESSAGE.isEmpty())
+        <div class="alert alert-error">
+          <strong>Ошибка!</strong> $MESSAGE
+        </div>
+        #end
+        
+        <form id="publicationForm" action="/publication/create/_handle/" method="post" enctype="multipart/form-data">
+          <input type="hidden" name="type" id="publicationType" value="$!TYPE">
+          
+          <!-- Шаг 1: Выбор типа публикации -->
+          <section class="form-section" data-step="1" aria-labelledby="step1-heading">
+            <h2 id="step1-heading">Тип публикации</h2>
+            <div class="publication-type-selector" role="radiogroup" aria-labelledby="publication-type-label">
+              <span id="publication-type-label" class="sr-only">Тип публикации</span>
+              
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false" data-type="book">
+                  <i class="icon-book"></i>
+                  <span>Книга</span>
+              </div>
+              
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false" data-type="article">
+                  <i class="icon-article"></i>
+                  <span>Статья</span>
+              </div>
+              
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="presentation">
+                <i class="icon-presentation"></i>
+                <span>Презентация</span>
+              </div>
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="thesis">
+                <i class="icon-thesis"></i>
+                <span>Диссертация</span>
+              </div>
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="vkr">
+                <i class="icon-vkr"></i>
+                <span>ВКР</span>
+              </div>
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="coursework">
+                <i class="icon-coursework"></i>
+                <span>Курсовая</span>
+              </div>
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="test">
+                <i class="icon-test"></i>
+                <span>Тест</span>
+              </div>
+              <div class="type-option" tabindex="0" role="radio" aria-checked="false"  data-type="lab">
+                <i class="icon-lab"></i>
+                <span>Лабораторная</span>
+              </div>
+            </div>
+            <div class="form-actions">
+              <button type="button" class="next-step">Далее</button>
+            </div>
+          </section>
+          
+          <!-- Шаг 2: Основная информация -->
+          <section class="form-section" data-step="2" aria-labelledby="step2-heading">
+            <h2 id="step2-heading">Основная информация</h2>
+            
+            <div class="form-group">
+              <label for="name">Название (служебное) *</label>
+              <input type="text" id="name" name="name" value="$!NAME" required 
+                     placeholder="Моя публикация" maxlength="50">
+              <div class="hint">Используется для вашего удобства, не отображается в выходных материалах</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Предмет *</label>
+                <input type="text" id="subject" name="subject" value="$!SUBJECT" required
+                      placeholder="Введите предмет">
+            </div>
+            
+            <div class="form-group">
+              <label for="tags">Теги</label>
+              <input type="text" id="tags" name="tags" value="$!TAGS" 
+                     placeholder="математика, алгебра, исследование">
+              <div class="hint">Разделяйте теги запятыми</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="visibility">Видимость</label>
+              <select id="visibility" name="visibility">
+                <option value="public">Публичная</option>
+                <option value="private">Приватная</option>
+                <option value="link">По ссылке</option>
+              </select>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="prev-step">Назад</button>
+              <button type="button" class="next-step">Далее</button>
+            </div>
+          </section>
+          
+          <!-- Шаг 3: Общие атрибуты -->
+          <section class="form-section" data-step="3" aria-labelledby="step3-heading">
+            <h2 id="step3-heading">Общая информация для публикации</h2>
+            
+            <div class="form-group">
+              <label for="title">Заголовок *</label>
+              <input type="text" id="title" name="title" value="$!TITLE" required
+                     placeholder="Основы квантовой механики">
+            </div>
+            
+            <div class="form-group">
+              <label for="subtitle">Подзаголовок</label>
+              <input type="text" id="subtitle" name="subtitle" value="$!SUBTITLE" 
+                     placeholder="Учебное пособие для студентов">
+            </div>
+            
+            <div class="form-group">
+              <label for="authors">Авторы</label>
+              <textarea id="authors" name="authors" 
+                        placeholder="Иванов И.И., Петров П.П.">$!AUTHORS</textarea>
+              <div class="hint">Указывайте каждого автора с новой строки</div>
+            </div>
+            
+            <div class="form-group">
+              <label for="date">Дата</label>
+              <input type="date" id="date" name="date" value="$!DATE">
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="prev-step">Назад</button>
+              <button type="button" class="next-step">Далее</button>
+            </div>
+          </section>
+          
+          <!-- Шаг 4: Специфические атрибуты (динамически меняется) -->
+          <section class="form-section" data-step="4" id="specificAttributes" aria-labelledby="step4-heading">
+            <!-- Контент подгружается динамически в зависимости от типа публикации -->
+          </section>
+          
+          <!-- Шаг 5: Предпросмотр и завершение -->
+          <section class="form-section" data-step="5" aria-labelledby="step5-heading">
+            <h2 id="step5-heading">Проверьте данные перед созданием</h2>
+            
+            <div class="preview-container">
+              <div class="preview-section">
+                <h3>Основная информация</h3>
+                <div id="previewBasicInfo"></div>
+              </div>
+              
+              <div class="preview-section">
+                <h3>Общая информация</h3>
+                <div id="previewCommonInfo"></div>
+              </div>
+              
+              <div class="preview-section">
+                <h3>Специфическая информация</h3>
+                <div id="previewSpecificInfo"></div>
+              </div>
+            </div>
+            
+            <div class="form-actions">
+              <button type="button" class="prev-step">Назад</button>
+              <button type="submit" class="submit-button">Создать публикацию</button>
+            </div>
+          </section>
+        </form>
+      </main>
+      #parse("inc-footer.vm")
+    </div>
+    
+    <script>
+    #parse("publication-form.vm")
+    </script>
   </body>
 </html>

@@ -7,3 +7,4 @@
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <link media="all" rel="stylesheet" type="text/css" href="/css/main.css">
 <link media="all" rel="stylesheet" type="text/css" href="/css/login.css">
+<link media="all" rel="stylesheet" type="text/css" href="/css/publication-form.css">
