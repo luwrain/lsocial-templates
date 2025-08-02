@@ -58,7 +58,7 @@
                 <!-- Кнопка Яндекса -->
                 <a aria-label="Войти через Яндекс. Откроется новое окно авторизации" 
                 role="button"
-                href="https://oauth.yandex.ru/authorize?response_type=code&client_id=$YANDEX_CLIENT_ID&redirect_uri=https://luwrain.social/oauth/yandex&scope=login:email%20login:info"
+                href="https://oauth.yandex.ru/authorize?response_type=code&client_id=$yandexClientId&redirect_uri=https://luwrain.social/oauth/yandex&scope=login:email%20login:info"
                 class="social-btn" 
                 title="Войти через Яндекс"
                 target="_blank"
