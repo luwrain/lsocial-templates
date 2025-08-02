@@ -51,13 +51,13 @@
           </div>
         </div>
         
-        #if($MESSAGE && !$MESSAGE.isEmpty())
+        #if($MESSAGE)
         <div class="alert alert-error">
           <strong>Ошибка!</strong> $MESSAGE
         </div>
         #end
         
-        <form id="publicationForm" action="/publication/create/_handle/" method="post" enctype="multipart/form-data">
+        <form id="publicationForm" action="/create/_handle/" method="post" enctype="application/x-www-form-urlencoded">
           <input type="hidden" name="type" id="publicationType" value="$!TYPE">
           
           <!-- Шаг 1: Выбор типа публикации -->
