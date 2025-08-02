@@ -5,7 +5,7 @@
     <title>Регистрация &#x2014; LUWRAIN Social</title>
     #parse("inc-head-links.vm")
     <!-- Подключаем reCAPTCHA -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?render =6LdtuI0rAAAAANcK2rMJZNOjPVwC3I0Fgpx8sFlO"  async defer></script>
 </head>
 <body>
     <div class="container_nbs">
@@ -33,10 +33,10 @@
                     <input type="text" name="nickname" id="nickname" maxlength="$nicknameLenLimit" required #if($nickname)value="$nickname"#end>
                 </div>
 
-                <div class="field">
+                <!--<div class="field">
                     <label for="email">E-mail</label>
                     <input type="email" name="email" id="email" required #if($email)value="$email"#end>
-                </div>
+                </div>-->
 
                 <div class="field">
                     <label for="password">Пароль</label>
@@ -51,7 +51,7 @@
 
                 <!-- Капча (обязательная для регистрации) -->
                 <div class="field">
-                    <div class="g-recaptcha" data-sitekey="$SITE_KEY"></div>
+                    <div class="g-recaptcha" data-sitekey="6LdtuI0rAAAAANcK2rMJZNOjPVwC3I0Fgpx8sFlO"></div>
                 </div>
                 
                 <!-- Юридические соглашения -->
@@ -87,7 +87,7 @@
                 <!-- Кнопка Яндекса -->
                 <a aria-label="Войти через Яндекс. Откроется новое окно авторизации" 
                 role="button"
-                href="https://oauth.yandex.ru/authorize?response_type=code&client_id=$YANDEX_CLIENT_ID&redirect_uri=https://luwrain.social/oauth/yandex&scope=login:email%20login:info"
+                href="https://oauth.yandex.ru/authorize?response_type=code&client_id=$yandexClientId&redirect_uri=https://luwrain.social/oauth/yandex&scope=login:email%20login:info"
                 class="social-btn" 
                 title="Войти через Яндекс"
                 target="_blank"
