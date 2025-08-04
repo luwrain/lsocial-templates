@@ -124,6 +124,7 @@ public class DebugServlet extends HttpServlet
     {
 	final var c = new VelocityContext();
 	c.put("type", "PAPER");
+	c.put("name", "Пробная статья");
 		c.put("authors", "Зупыркин Зю. Зю.");
 		c.put("title", "Вычисленеи второй производной скорости у галапагосских черепах");
 		c.put("date", "2025");
