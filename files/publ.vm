@@ -50,7 +50,7 @@
                 </div>
                 <div class="create__sections" style="grid-area: sect;">
                   <a class="aButton" href="/publication/section/insert/?publ=$ID&pos=0" title="Открыть страницу добавления новой секции в текущем положении">+</a>
-#foreach($i in $SECTIONS)
+#foreach($i in $sections)
                   <a id="$i.id" class="aButton" href="$i.link"><strong>[$i.type]</strong> Секция $i.num</a>
                   <a class="aButton" href="$i.inslink" title="Открыть страницу добавления новой секции в текущем положении">+</a>
 #end
