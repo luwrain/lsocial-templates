@@ -5,6 +5,7 @@ package org.luwrain.webdebug;
 import java.util.*;
 import java.io.*;
 import java.nio.file.*;
+import lombok.*;
 
 import jakarta.servlet.annotation.*;
 import jakarta.servlet.*;
@@ -64,6 +65,11 @@ public class DebugServlet extends HttpServlet
         resp.setStatus(HttpServletResponse.SC_OK);
 	resp.getWriter().println(newPubl());
 	return;
+				    case "/ppaper":
+	resp.setContentType("text/html");
+        resp.setStatus(HttpServletResponse.SC_OK);
+	resp.getWriter().println(paper());
+	return;
     }
     resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 }
@@ -114,6 +120,26 @@ public class DebugServlet extends HttpServlet
 	return render(c, "new-publ.vm");
 	    }
 
+                    String paper() throws IOException
+    {
+	final var c = new VelocityContext();
+	c.put("type", "PAPER");
+		c.put("authors", "Зупыркин Зю. Зю.");
+		c.put("title", "Вычисленеи второй производной скорости у галапагосских черепах");
+		c.put("date", "2025");
+		c.put("location", "Томск");
+		c.put("udk", "15601234-12234098");
+		c.put("published", "Отпечатный журнал «Траблы в нашей жизни»");
+		final var res = new ArrayList<Section>();
+		res.add(new Section("dlaksjdlaksjd", "/publication/section/", "/publication/section/insert", "1", "Простой текст"));
+		res.add(new Section("dlaksjdlaksjd", "/publication/section/", "/publication/section/insert", "2", "Текст TeX"));
+    res.add(new Section("dlaksjdlaksjd", "/publication/section/", "/publication/section/insert", "3", "Рисунок"));
+    c.put("sections", res);						
+	return render(c, "publ.vm");
+	    }
+
+
+
     String render(VelocityContext context, String templateName) throws IOException
     {
 	final var eng = new Engine(loadTemplates());
@@ -129,4 +155,15 @@ public class DebugServlet extends HttpServlet
 	.filter(f -> f.getFileName().toString().endsWith(".vm"))
 	.collect(toMap(f -> f.getFileName().toString(), f -> readTextFile(f).stream().collect(joining("\n"))));
     }
+
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static public final class Section
+    {
+	private String id, link, inslink, num, type;
+    }
+
+    
+    
 }
