@@ -1,0 +1,20 @@
+<div class="form-grid">
+  <div class="form-group">
+    <label for="deadline">Дедлайн</label>
+    <input id="deadline" name="deadline" type="date"
+           data-scope="meta" data-field="deadline" value="$!esc.html($deadlineIso)"/>
+  </div>
+  <div class="form-group">
+    <label for="required">Обязательность</label>
+    <select id="required" name="required"
+            data-scope="meta" data-field="required">
+      <option value="required" #if($required=="required")selected#end>Обязательный</option>
+      <option value="optional" #if($required=="optional")selected#end>Опциональный</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="points">Ценность (баллы)</label>
+    <input id="points" name="points" type="number" min="0" step="1"
+           data-scope="meta" data-field="points" value="$!esc.html($points)"/>
+  </div>
+</div>

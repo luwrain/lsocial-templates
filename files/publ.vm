@@ -2,65 +2,358 @@
 <html lang="ru">
   <head>
     <meta charset="utf-8">
-    <title>$TITLE &#x2014; LUWRAIN Social</title>
-#parse("inc-head-links.vm")
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Редактировать публикацию — LUWRAIN Social</title>
+    #parse("inc-head-links.vm")
   </head>
   <body>
-    <div class="container_nbs">
-#parse("inc-header-login.vm")
-      <main style="max-width: 60rem; min-width: 50rem; margin: 0 auto;">
-        <div style="padding: 0; position: relative; display: flex; justify-content: center;">
-          <main style="max-width: 60rem; min-width: 50rem; margin: auto;">
-            <div style="padding: 0; position: relative; display: flex; justify-content: center;">
-              <h3 style="color: var(--text-800);">$NAME</h3>
-              <div class="_hoverBTN">
-                <div class="dropdown" style="margin: 0; padding: 0;">
-                  <button class="dropbtn" value="i" style="background-color: transparent; border-radius: 100%;"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24"><path fill="var(--text-700)" d="M12 1.998c5.524 0 10.002 4.478 10.002 10.002c0 5.523-4.478 10-10.002 10c-5.524.001-10-4.477-10-10C1.999 6.476 6.476 1.998 12 1.998Zm0 1.5a8.502 8.502 0 1 0 0 17.003a8.502 8.502 0 0 0 0-17.003Zm-.004 7a.75.75 0 0 1 .744.648l.007.102l.004 5.502a.75.75 0 0 1-1.494.102l-.006-.101l-.004-5.502a.75.75 0 0 1 .75-.75Zm.005-3.497a.999.999 0 1 1 0 1.997a.999.999 0 0 1 0-1.997Z"/></svg></button>
-                  <div class="dropdown-content">
-#if($TYPE == "PAPER_MCOL")
-                    <h4>Информация о статье</h4>
-                    <strong>Место публикации:</strong> $PUBLISHED</p>
-                    <p><strong>УДК:</strong> $UDK<//p>
-#end
-#if($TYPE == "GRADUATE")
-                    <h4>Информация о ВКР</h4>
-                    <strong>Образовательное учреждение:</strong> $ORG</p>
-                    <p><strong>Номер группы:</strong> $GROUP</p>
-                    <strong>Имя научного руководителя:</strong> $SVNAME</p>
-                    <p><strong>Уч. степень научного руководителя:</strong> $SVDEGREE</p>
-                    <p><strong>Уч. звание научного руководителя:</strong> $SVSVRANK</p>
-#end
-                    <p><strong>Город создания:</strong> $CITY</p>
-                    <p><strong>Год создания:</strong> $YEAR</p>
-                    <p><strong>Предмет:</strong> $SUBJECT</p>
-                  </div>
-                </div>
+    <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+    <div class="container_nbs" id="appContent">
+      #parse("inc-header-login.vm")
+      <main id="main" class="publication-form-container" aria-labelledby="pageTitle">
+        
+
+        <!-- Метаданные -->
+        <section class="form-section active" aria-labelledby="metaTitle">
+          <h3 id="pageTitle">
+            <span class="badge" aria-label="Тип публикации: $!item.type">$!item.type Статья</span>
+              $!esc.html($name) Как растут грибы в лесу осиновом и березовом, а еще еловом
+          </h3>
+          <div class="login-divider"></div>
+          <div class="editor-divider">
+            <span id="metaTitle" style="font-size: 20px">Основная информация</span>
+          </div>
+
+            ## Общие поля
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="title">Заголовок</label>
+                <input id="title" name="title" type="text"
+                      data-scope="meta" data-field="title"
+                      value="$!esc.html($title)"/>
+              </div>
+              <div class="form-group">
+                <label for="authors">Авторы</label>
+                <input id="authors" name="authors" type="text"
+                      data-scope="meta" data-field="authors"
+                      value="$!esc.html($authors)"/>
+              </div>
+              <div class="form-group">
+                <label for="date">Дата</label>
+                <input id="date" name="date" type="date"
+                      data-scope="meta" data-field="date"
+                      value="$!esc.html($date)"/>
               </div>
             </div>
-            <div class="main__sections">
-              <div class="container_2-2">
-                <div class="info__" style="grid-area: info; overflow-y: auto;">
-                  <p><strong>Заглавие:</strong> $TITLE</p>
-                  <p><strong>Авторы:</strong> $AUTHORS</p>
+
+            <div class="editor-divider">
+              <span id="metaExtraTitle" style="font-size: 20px">Дополнительная информация</span>
+            </div>
+            
+            ## Типозависимые поля
+            #if($type && $type.equals("PAPER"))
+              #parse("publ-fields-paper.vm")
+            #elseif($type && $type.equals("BOOK"))
+              #parse("publ-fields-book.vm")
+            #elseif($type && $type.equals("THESIS"))
+              #parse("publ-fields-thesis.vm")
+            #elseif($type && $type.equals("VKR"))
+              #parse("publ-fields-vkr.vm")
+            #elseif($type && $type.equals("COURSEWORK"))
+              #parse("publ-fields-coursework.vm")
+            #elseif($type && ($type.equals("TEST") || $type.equals("LAB")))
+              #parse("publ-fields-testlab.vm")
+            #end
+        </section>
+
+
+        <!-- Секции -->
+        <section class="form-section active" aria-labelledby="sectionsTitle">
+          <h3 id="sectionsTitle" style="text-align: center; padding: 1rem">Секции</h3>
+
+          <div class="toolbar" role="toolbar" aria-label="Добавить секцию">
+            <button type="button" class="aButton" data-add="md">+ Markdown</button>
+            <button type="button" class="aButton" data-add="tex">+ TeX</button>
+            <button type="button" class="aButton" data-add="uml">+ UML</button>
+            <button type="button" class="aButton" data-add="gnuplot">+ GNUPlot</button>
+            <button type="button" class="aButton" data-add="graphviz">+ Graphviz</button>
+            <button type="button" class="aButton" data-add="image">+ Изображение</button>
+          </div>
+
+          <ol id="sectionsList" class="sections-list" aria-describedby="sectionsHelp">
+            #foreach($s in $sections)
+
+            ## Вычисляем метку типа: title → type → name → "Тип"
+            #set($secLabel = "")
+            #if($s.title)        #set($secLabel = $s.title)     #end
+            #if(!$secLabel && $s.type) #set($secLabel = $s.type) #end
+            #if(!$secLabel && $s.name) #set($secLabel = $s.name) #end
+            #if(!$secLabel)      #set($secLabel = "Тип")    #end
+
+            <li class="section-card"
+                data-id="$!esc.html($s.id)"
+                data-type="$!esc.html($secLabel)">
+              <header class="section-head">
+                <div class="head-left">
+                  <span class="type-badge" aria-hidden="true">$!esc.html($secLabel)</span>
+                  <strong class="section-label">Секция $foreach.count</strong>
                 </div>
-                <div class="edit_btns" style="grid-area: btns;">
-                  <a class="aButton" href="/publication/header/?publ=$ID" title="Изменить основные атрибуты в заглавии работы(название, авторы, название образовательного учреждения, УДК и пр.)">Основная информация о работе</a>
-                  <a class="aButton" href="/publication/type/?publ=$ID" title="Выбрать новый тип работы (статья, ВКР, диссертация и пр.)">Тип работы</a>
-                  <a class="aButton" href="/publication/delete/?publ=$ID" title="Удалить работу без возможности восстановления">Удалить</a>
+
+                <div class="head-right" role="group" aria-label="Управление секцией">
+                  <div class="reorder">
+                    <button type="button" class="btn-small move-first">
+                      <span aria-hidden="true">⟰</span><span class="sr-only">В начало</span>
+                    </button>
+                    <button type="button" class="btn-small move-up">
+                      <span aria-hidden="true">↑</span><span class="sr-only">Вверх</span>
+                    </button>
+                    <button type="button" class="btn-small move-down">
+                      <span aria-hidden="true">↓</span><span class="sr-only">Вниз</span>
+                    </button>
+                    <button type="button" class="btn-small move-last">
+                      <span aria-hidden="true">⟱</span><span class="sr-only">В конец</span>
+                    </button>
+                  </div>
+
+                  <button type="button" class="btn-small ghost toggle-collapse" aria-expanded="true">
+                    Свернуть
+                  </button>
+
+                  <!-- лечил 405: используем GET. Если бек ждёт другой путь/параметры — поменяйте action. -->
+                  <button type="button" class="btn-small danger mark-delete" aria-pressed="false">Удалить</button>
                 </div>
-                <div class="create__sections" style="grid-area: sect;">
-                  <a class="aButton" href="/publication/section/insert/?publ=$ID&pos=0" title="Открыть страницу добавления новой секции в текущем положении">+</a>
-#foreach($i in $SECTIONS)
-                  <a id="$i.id" class="aButton" href="$i.link"><strong>[$i.type]</strong> Секция $i.num</a>
-                  <a class="aButton" href="$i.inslink" title="Открыть страницу добавления новой секции в текущем положении">+</a>
-#end
-                </div>
+              </header>
+
+              <div class="editor" data-collapsible>
+                <label for="sect-$foreach.count-src">Исходный текст</label>
+                <textarea id="sect-$foreach.count-src"
+                          name="sections[$foreach.count].src"
+                          rows="8"
+                          aria-describedby="sect-$foreach.count-help">$!esc.html($s.text)</textarea>
+                <div id="sect-$foreach.count-help" class="hint">Предпросмотр ниже.</div>
+                <div class="preview" role="region" aria-live="polite" aria-atomic="true"
+                    aria-label="Предпросмотр секции"></div>
               </div>
-            </main>
-          </main>
-        </div>
+            </li>
+            #end
+          </ol>
+          <div id="liveRegion" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+
+
+
+          <p id="sectionsHelp" class="hint">
+            Используйте кнопки «в начало», «вверх», «вниз», «в конец» для изменения порядка секций.
+          </p>
+        </section>
+
+        <!-- Действия -->
+        <section class="actions-bar" aria-label="Действия">
+          <button type="button" class="aButton primary" id="saveDraftBtn">Сохранить черновик</button>
+          <button type="button" class="aButton secondary" id="previewBtn">Предпросмотр</button>
+          <button type="button" class="aButton danger" id="deletePubBtn" data-danger="true">Удалить публикацию</button>
+          <div id="saveNote" class="sr-only" aria-live="polite"></div>
+        </section>
+
+        <!-- Скрытая форма-реципиент. Поменять action на свой URL сохранения, когда будет готов. -->
+        <form id="saveForm" method="post" action="/publication/save" class="sr-only">
+          <input type="hidden" name="payload" id="payloadInput">
+        </form>
+
       </main>
-#parse("inc-footer.vm")  
+      #parse("inc-footer.vm")
     </div>
+    
+    <script type="text/javascript">
+      (function(){
+        var list = document.getElementById('sectionsList');
+        var live = document.getElementById('liveRegion');
+        var saveBtn = document.getElementById('saveDraftBtn');
+        var payloadInput = document.getElementById('payloadInput');
+        var saveForm = document.getElementById('saveForm');
+
+        initSectionTypes();
+
+        function initSectionTypes(){
+          if(!list) return;
+          var items = Array.prototype.slice.call(list.children);
+          for(var i=0;i<items.length;i++){
+            var li = items[i];
+            var type = li.getAttribute('data-type');
+            var badge = li.querySelector('.type-badge');
+            var text = (badge && badge.textContent) ? badge.textContent.trim() : '';
+            if(!type || type === ''){
+              if(!text) text = 'Тип';
+              li.setAttribute('data-type', text);
+            }
+            if(badge && !badge.textContent.trim()){
+              badge.textContent = text || 'Тип';
+            }
+          }
+        }
+
+
+        // Утилиты
+
+        function say(msg){
+          live.textContent = '';
+          setTimeout(function(){ live.textContent = msg; }, 10);
+        }
+
+        function renumberSections(){
+          var items = Array.prototype.slice.call(list.children);
+          for (var i=0;i<items.length;i++){
+            var label = items[i].querySelector('.section-label');
+            if(label) label.textContent = 'Секция ' + (i+1);
+          }
+        }
+        
+
+        // создать новую секцию
+        function makeSectionLi(typeLabel){
+          var li = document.createElement('li');
+          var uid = String(Date.now());
+          li.className = 'section-card';
+          li.setAttribute('data-id', 'new-' + uid);
+          li.setAttribute('data-type', typeLabel);
+
+          li.innerHTML =
+            '<header class="section-head">' +
+              '<div class="head-left">' +
+                '<span class="type-badge" aria-hidden="true">' + typeLabel + '</span>' +
+                '<strong class="section-label">Секция ' + (list.children.length+1) + '</strong>' +
+              '</div>' +
+              '<div class="head-right" role="group" aria-label="Управление секцией">' +
+                '<div class="reorder">' +
+                  '<button type="button" class="btn-small move-first"><span aria-hidden="true">&#10224;</span><span class="sr-only">В начало</span></button>' +
+                  '<button type="button" class="btn-small move-up"><span aria-hidden="true">&#8593;</span><span class="sr-only">Вверх</span></button>' +
+                  '<button type="button" class="btn-small move-down"><span aria-hidden="true">&#8595;</span><span class="sr-only">Вниз</span></button>' +
+                  '<button type="button" class="btn-small move-last"><span aria-hidden="true">&#10225;</span><span class="sr-only">В конец</span></button>' +
+                '</div>' +
+                '<button type="button" class="btn-small ghost toggle-collapse" aria-expanded="true">Свернуть</button>' +
+                '<button type="button" class="btn-small danger mark-delete" aria-pressed="false">Удалить</button>' +
+              '</div>' +
+            '</header>' +
+            '<div class="editor" data-collapsible>' +
+              '<label for="tmp-sect-' + uid + '-src">Исходный текст</label>' +
+              '<textarea id="tmp-sect-' + uid + '-src" rows="8" aria-describedby="help-' + uid + '"></textarea>' +
+              '<div id="help-' + uid + '" class="hint">Предпросмотр ниже.</div>' +
+              '<div class="preview" role="region" aria-live="polite" aria-atomic="true" aria-label="Предпросмотр секции"></div>' +
+            '</div>';
+
+          return li;
+        }
+
+        // обработчики
+        document.addEventListener('click', function(e){
+          // добавление
+          var addBtn = e.target.closest ? e.target.closest('[data-add]') : null;
+          if(addBtn){
+            var type = addBtn.getAttribute('data-add');
+            var names = { md:'MRKDN', tex:'TeX', uml:'UML', gnuplot:'GNUP', graphviz:'GRAPH', image:'ИЗОБР' };
+            var label = names[type] || type;
+            list.appendChild(makeSectionLi(label));
+            renumberSections();
+            say('Добавлена секция ' + label);
+            return;
+          }
+
+          var li = e.target.closest ? e.target.closest('.section-card') : null;
+          if(!li) return;
+
+          if(e.target.closest('.move-first')){
+            list.insertBefore(li, list.firstChild); renumberSections(); say('Секция перемещена в начало'); return;
+          }
+          if(e.target.closest('.move-up')){
+            var prev = li.previousElementSibling; if(prev){ list.insertBefore(li, prev); renumberSections(); say('Секция перемещена вверх'); }
+            return;
+          }
+          if(e.target.closest('.move-down')){
+            var next = li.nextElementSibling; if(next){ list.insertBefore(next, li); renumberSections(); say('Секция перемещена вниз'); }
+            return;
+          }
+          if(e.target.closest('.move-last')){
+            list.appendChild(li); renumberSections(); say('Секция перемещена в конец'); return;
+          }
+          if(e.target.closest('.toggle-collapse')){
+            var btn = e.target.closest('.toggle-collapse');
+            var box = li.querySelector('[data-collapsible]');
+            var expanded = btn.getAttribute('aria-expanded') === 'true';
+            btn.setAttribute('aria-expanded', String(!expanded));
+            btn.textContent = expanded ? 'Развернуть' : 'Свернуть';
+            box.hidden = expanded; return;
+          }
+          if(e.target.closest('.mark-delete')){
+            var btn = e.target.closest('.mark-delete');
+            var isRemoved = li.getAttribute('data-removed') === '1';
+            if(isRemoved){
+              li.removeAttribute('data-removed');
+              li.classList.remove('is-removed');
+              btn.textContent = 'Удалить';
+              btn.setAttribute('aria-pressed','false');
+              say('Секция восстановлена');
+            }else{
+              li.setAttribute('data-removed','1');
+              li.classList.add('is-removed');
+              btn.textContent = 'Восстановить';
+              btn.setAttribute('aria-pressed','true');
+              say('Секция помечена на удаление');
+            }
+            return;
+          }
+        });
+
+        // сохранение
+        if(saveBtn){
+          saveBtn.addEventListener('click', function(){
+            var payload = { meta:{}, sections:[], removed_ids:[] };
+
+            // собираем мета из data-scope="meta"
+            var metaNodes = document.querySelectorAll('[data-scope="meta"]');
+            for(var i=0;i<metaNodes.length;i++){
+              var el = metaNodes[i], key = el.getAttribute('data-field');
+              if(!key) continue;
+              payload.meta[key] = (el.value != null) ? el.value : '';
+            }
+
+            // секции
+            var items = Array.prototype.slice.call(list.children);
+            for (var i=0;i<items.length;i++){
+              var node = items[i];
+              var removed = node.getAttribute('data-removed') === '1';
+              var id = node.getAttribute('data-id') || null;
+              if(removed){
+                if(id && id.indexOf('new-') !== 0){ payload.removed_ids.push(id); }
+                continue;
+              }
+              var ta = node.querySelector('textarea');
+              var type = node.getAttribute('data-type') || (node.querySelector('.type-badge')||{}).textContent || '';
+              payload.sections.push({
+                id: (id && id.indexOf('new-')===0) ? null : id,
+                type: type,
+                src: ta ? ta.value : '',
+                order: i+1
+              });
+            }
+
+            try{
+              payloadInput.value = JSON.stringify(payload);
+              if(saveForm && saveForm.getAttribute('action') && saveForm.getAttribute('action') !== '#'){
+                saveForm.submit();
+                say('Черновик отправлен на сохранение');
+              }else{
+                say('Черновик собран (форма сохранения не настроена)');
+                if(window.console) console.log('payload', payload);
+              }
+            }catch(err){
+              say('Ошибка подготовки данных');
+              if(window.console) console.error(err);
+            }
+          });
+        }
+      })();
+
+      //TODO: Предпросмотр введенной секции
+    </script>
   </body>
 </html>

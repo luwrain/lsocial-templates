@@ -1,0 +1,43 @@
+<div class="form-grid">
+  <div class="form-group">
+    <label for="location">Место публикации</label>
+    <input id="location" name="location" type="text"
+           data-scope="meta" data-field="location" value="$!esc.html($location)"/>
+  </div>
+  <div class="form-group">
+    <label for="org">Образовательное учреждение</label>
+    <input id="org" name="org" type="text"
+           data-scope="meta" data-field="org" value="$!esc.html($org)"/>
+  </div>
+  <div class="form-group">
+    <label for="udk">УДК</label>
+    <input id="udk" name="udk" type="text"
+           data-scope="meta" data-field="udk" value="$!esc.html($udk)"/>
+  </div>
+</div>
+
+<fieldset>
+  <legend>Научный руководитель</legend>
+  <div class="form-grid">
+    <div class="form-group">
+      <label for="advisorName">Имя</label>
+      <input id="advisorName" name="advisorName" type="text"
+             data-scope="meta" data-field="advisorName" value="$!esc.html($advisorName)"/>
+    </div>
+    <div class="form-group">
+      <label for="advisorJob">Должность и место работы</label>
+      <input id="advisorJob" name="advisorJob" type="text"
+             data-scope="meta" data-field="advisorJob" value="$!esc.html($advisorJob)"/>
+    </div>
+    <div class="form-group">
+      <label for="advisorDegree">Учёная степень</label>
+      <input id="advisorDegree" name="advisorDegree" type="text"
+             data-scope="meta" data-field="advisorDegree" value="$!esc.html($advisorDegree)"/>
+    </div>
+    <div class="form-group">
+      <label for="advisorRank">Учёное звание</label>
+      <input id="advisorRank" name="advisorRank" type="text"
+             data-scope="meta" data-field="advisorRank" value="$!esc.html($advisorRank)"/>
+    </div>
+  </div>
+</fieldset>
