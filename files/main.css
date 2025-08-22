@@ -224,7 +224,7 @@ main {
 }
 
 .create__sections {
-    padding: 30rem;
+    padding: 1rem;
     align-items: center;
     align-content: center;
     justify-self: center;
@@ -755,3 +755,31 @@ textarea {
 .skip-link:focus {
     top: 0;
 }
+
+/* Секции */
+.create__sections { 
+  padding: 1rem;      /* вместо 30rem */
+  max-height: 60vh; 
+  overflow: auto; 
+}
+.sections-list { 
+  list-style: none; 
+  padding: 0; 
+  margin: 1rem 0; 
+  display: grid; 
+  gap: 1rem; 
+}
+.section-card { 
+  background: var(--background-50); 
+  border-radius: 10px; 
+  box-shadow: 0 2px 8px var(--box-shadow); 
+  padding: 1rem; 
+}
+.section-card header { 
+  display:flex; 
+  justify-content: space-between; 
+  align-items:center; 
+}
+.section-card .editor textarea { width:100%; margin-top: .5rem; }
+.section-card .preview { margin-top: .5rem; padding:.5rem; background:var(--background-100); }
+.danger { background:#ffe8e6; color:#8b1a12; border:1px solid #ffc5bf; }

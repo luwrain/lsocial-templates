@@ -1,0 +1,47 @@
+<div class="form-grid">
+  <div class="form-group">
+    <label for="location">Место публикации</label>
+    <input id="location" name="location" type="text"
+           data-scope="meta" data-field="location" value="$!esc.html($location)"/>
+  </div>
+  <div class="form-group">
+    <label for="udk">УДК</label>
+    <input id="udk" name="udk" type="text"
+           data-scope="meta" data-field="udk" value="$!esc.html($udk)"/>
+  </div>
+  <div class="form-group">
+    <label for="bbk">ББК</label>
+    <input id="bbk" name="bbk" type="text"
+           data-scope="meta" data-field="bbk" value="$!esc.html($bbk)"/>
+  </div>
+  <div class="form-group">
+    <label for="isbn">ISBN</label>
+    <input id="isbn" name="isbn" type="text"
+           data-scope="meta" data-field="isbn" value="$!esc.html($isbn)"/>
+  </div>
+  <div class="form-group">
+    <label for="bookType">Тип книги</label>
+    <input id="bookType" name="bookType" type="text" placeholder="Учебное пособие, методичка…"
+           data-scope="meta" data-field="bookType" value="$!esc.html($bookType)"/>
+  </div>
+  <div class="form-group">
+    <label for="keywords">Ключевые слова</label>
+    <input id="keywords" name="keywords" type="text"
+           data-scope="meta" data-field="keywords" value="$!esc.html($keywords)"/>
+  </div>
+  <div class="form-group">
+    <label for="preTitle">Текст над заглавием</label>
+    <input id="preTitle" name="preTitle" type="text"
+           data-scope="meta" data-field="preTitle" value="$!esc.html($preTitle)"/>
+  </div>
+  <div class="form-group">
+    <label for="postTitle">Текст под заглавием</label>
+    <input id="postTitle" name="postTitle" type="text"
+           data-scope="meta" data-field="postTitle" value="$!esc.html($postTitle)"/>
+  </div>
+  <div class="form-group">
+    <label for="abstract">Аннотация</label>
+    <textarea id="abstract" name="abstract" rows="4"
+              data-scope="meta" data-field="abstract">$!esc.html($abstract)</textarea>
+  </div>
+</div>

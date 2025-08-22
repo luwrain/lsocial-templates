@@ -288,21 +288,10 @@ input:invalid, textarea:invalid, select:invalid {
 }
 
 /* Для скринридеров */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
-}
+.sr-only {position: absolute;width: 1px;height: 1px;padding: 0;margin: -1px;overflow: hidden;clip: rect(0, 0, 0, 0);border: 0;}
 
 /* Для скрытых секций используем display: none вместо aria-hidden */
-.form-section:not(.active) {
-    display: none !important;
-}
+.form-section:not(.active) {display: none !important;}
 
 /* Улучшение фокуса для доступности */
 .type-option:focus, 
@@ -312,4 +301,234 @@ textarea:focus,
 select:focus {
     outline: 3px solid var(--primary-500);
     outline-offset: 2px;
+}
+
+
+/* --- СТИЛИ ДЛЯ СТРАНИЦЫ РЕДАКТИРОВАНИЯ ПУБЛИКАЦИИ --- */
+
+
+/* Заголовок страницы + бейдж */
+#pageTitle{
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.15;
+  font-weight: 800;
+  color: var(--text-900);
+  letter-spacing: .1px;
+}
+#pageTitle .badge{
+  background: var(--primary-700);
+  color: #fff;
+  border: none;
+  padding: .5rem .8rem;
+  border-radius: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 0 rgba(0,0,0,.06), 0 6px 16px rgba(0,0,0,.08);
+}
+
+
+/* ---------- Разделители с заголовком ---------- */
+.editor-divider{display:flex;align-items:center;gap:.75rem;margin:20px 0 12px}
+.editor-divider::before,.editor-divider::after{content:"";flex:1;height:1px;background:var(--background-200)}
+.editor-divider span{white-space:nowrap;color:var(--text-700);font-weight:600}
+
+
+/* ---------- Тулбар добавления секций ---------- */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 16px; justify-content: space-evenly;}
+.toolbar .aButton{min-height:38px;padding:.45rem .85rem;border-radius:12px;
+  background:var(--primary-50);border:1px solid var(--primary-200);color:var(--primary-700)}
+.toolbar .aButton:hover{background:var(--primary-100)}
+
+
+/* ---------- Карточка секции ---------- */
+.sections-list{list-style:none;padding-left:0}
+.section-card{border:1px solid transparent; box-shadow:0 1px 0 var(--background-200), 0 6px 16px -8px var(--box-shadow);}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.section-head .head-left{display:flex;align-items:center;gap:8px}
+.type-badge{display:flex;align-items:center;padding:.25rem .6rem;border-radius:999px;flex-wrap: nowrap;
+  background:var(--primary-50);border:1px solid var(--primary-200);color:var(--primary-700);font-size:.9rem;}
+.section-label{font-weight:600;color:var(--text-800)}
+
+.head-right{display:flex;align-items:center;gap:8px}
+.reorder{display:flex;gap:6px}
+.btn-small{border:1px solid var(--background-200);background:var(--background-50);
+  border-radius:10px;padding:.35rem .5rem;height:32px;line-height:1;font-size:.95rem;color:var(--text-700)}
+.btn-small:hover{background:var(--background-100)}
+.btn-small.ghost{background:transparent;border-color:var(--background-200)}
+.btn-small.danger{background:var(--accent-100);border-color:var(--accent-200);color:var(--accent-700)}
+
+.editor{margin-top:.65rem}
+.hint{color:var(--text-400);font-size:.85rem;margin:.35rem 0}
+.preview{min-height:10px;border-radius:8px;background:var(--background-100);border:1px solid var(--background-200)}
+.section-card.is-removed{opacity:.7;background:var(--accent-50);border-color:var(--accent-200)}
+.section-card.is-removed .editor{display:none}
+
+
+/* ---------- Кнопки действий внизу ---------- */
+.actions-bar{display:flex;gap:16px;flex-wrap:wrap;margin-top:16px}
+.actions-bar .aButton{min-height:48px;padding:.8rem 1.2rem;font-weight:600;border-radius:14px}
+.actions-bar .aButton.primary{background:var(--primary-100);border:1px solid var(--primary-200);color:var(--primary-700)}
+.actions-bar .aButton.secondary{background:var(--background-100);border:1px solid var(--background-200);color:var(--text-700)}
+.actions-bar .aButton.danger{background:var(--accent-100);border:1px solid var(--accent-200);color:var(--accent-600)}
+
+
+
+/* Карточка формы */
+.form-section{
+  border: 1px solid var(--background-200);
+  box-shadow: 0 10px 30px rgba(0,0,0,.04);
+}
+
+
+/* Поля ввода — более «воздушные» */
+.form-group label{ color: var(--text-700); }
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea{
+  background: #fff;
+  border: 1.5px solid var(--background-200);
+  border-radius: 12px;
+  padding: .8rem 1rem;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{
+  border-color: var(--primary-400);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--primary-500) 18%, transparent);
+}
+
+
+/* Тулбар + секции*/
+.toolbar{
+  justify-content: flex-start;
+  gap: .6rem .6rem;
+}
+.toolbar .aButton{
+  background: var(--background-100);
+  border: 1px solid var(--background-200);
+  color: var(--text-800);
+  border-radius: 999px;
+  padding: .55rem 1rem;
+  font-weight: 700;
+}
+.toolbar .aButton:hover{
+  background: var(--background-200);
+}
+
+
+/* контейнер li уже есть — добавим визуал */
+.section-card{
+  background: var(--background-50);
+  border: 1px solid var(--background-200);
+  border-radius: 14px;
+  padding: 14px;
+  margin: 12px 0;
+  box-shadow: 0 8px 24px rgba(0,0,0,.04);
+}
+
+/* Шапка секции */
+.section-head{ padding: 2px 2px 8px; }
+.section-head .head-left{ gap: 10px; }
+.type-badge{
+  background: var(--primary-50);
+  border: 1px solid var(--primary-200);
+  color: var(--primary-700);
+  padding: .35rem .7rem;
+  border-radius: 999px;
+  font-weight: 700;
+}
+.section-label{
+  font-weight: 800;
+  color: var(--text-900);
+  letter-spacing: .2px;
+}
+
+/* Кнопки управления секцией*/
+.reorder{ gap: 6px; }
+.btn-small{
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  border: 1px solid var(--background-200);
+  background: var(--background-50);
+  color: var(--text-700);
+  transition: background .12s ease, transform .05s ease;
+}
+.btn-small:hover{ background: var(--background-100); }
+.btn-small:active{ transform: translateY(1px); }
+.btn-small.ghost{
+  width: auto; padding: .35rem .6rem;
+  background: var(--background-50);
+  border-color: var(--background-200);
+  font-weight: 700;
+}
+.btn-small.danger{
+  width: auto; padding: .35rem .6rem;
+  background: #fdeaea;
+  border-color: #f5c2c7;
+  color: #a94442;
+}
+
+/* Редактор секции */
+.editor{ margin-top: .5rem; }
+.editor label{
+  color: var(--text-700);
+  font-weight: 700;
+}
+.editor textarea{
+  background: #fff;
+  border: 1.5px solid var(--background-200);
+  border-radius: 12px;
+  min-height: 140px;
+  box-shadow: inset 0 1px 0 rgba(0,0,0,.03);
+}
+.hint{ color: var(--text-600); }
+.preview{
+  min-height: 10px;
+  margin-top: .5rem;
+  background: var(--background-100);
+  border: 1px solid var(--background-200);
+  border-radius: 10px;
+}
+.section-card.is-removed{
+  background: color-mix(in oklab, var(--accent-50) 70%, white);
+  border-color: var(--accent-200);
+  opacity: .85;
+}
+
+/* Нижние кнопки действий */
+.actions-bar{ justify-content: flex-start; }
+.actions-bar .aButton{
+  border-radius: 14px;
+  padding: .85rem 1.25rem;
+  font-weight: 800;
+}
+.actions-bar .aButton.primary{
+  background: var(--primary-600);
+  color: #fff;
+  border: none;
+  box-shadow: 0 12px 30px rgba(85,170,170,.25);
+}
+.actions-bar .aButton.primary:hover{ background: var(--primary-700); }
+.actions-bar .aButton.secondary{
+  background: var(--background-100);
+  border: 1px solid var(--background-200);
+  color: var(--text-800);
+}
+.actions-bar .aButton.danger{
+  background: #fdeaea;
+  border: 1px solid #f5c2c7;
+  color: #a94442;
+}
+
+/* Фокус */
+.aButton:focus, .btn-small:focus,
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus{
+  outline: 3px solid color-mix(in oklab, var(--primary-500) 35%, transparent);
+  outline-offset: 2px;
 }

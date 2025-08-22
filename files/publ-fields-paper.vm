@@ -1,0 +1,27 @@
+<div class="form-grid">
+  <div class="form-group">
+    <label for="location">Место публикации</label>
+    <input id="location" name="location" type="text"
+           data-scope="meta" data-field="location" value="$!esc.html($location)"/>
+  </div>
+  <div class="form-group">
+    <label for="udk">УДК</label>
+    <input id="udk" name="udk" type="text"
+           data-scope="meta" data-field="udk" value="$!esc.html($udk)"/>
+  </div>
+  <div class="form-group">
+    <label for="published">Журнал / конференция</label>
+    <input id="published" name="published" type="text"
+           data-scope="meta" data-field="venue" value="$!esc.html($published)"/>
+  </div>
+  <div class="form-group">
+    <label for="keywords">Ключевые слова</label>
+    <input id="keywords" name="keywords" type="text"
+           data-scope="meta" data-field="keywords" value="$!esc.html($keywords)"/>
+  </div>
+  <div class="form-group">
+    <label for="abstract">Аннотация</label>
+    <textarea id="abstract" name="abstract" rows="4"
+              data-scope="meta" data-field="abstract">$!esc.html($abstract)</textarea>
+  </div>
+</div>
